@@ -31,7 +31,7 @@ node scripts/apply-catalog-refresh.cjs --root out
 node scripts/pack-home-refresh.cjs --root out --out dist
 ```
 
-`refreshHomepage()` rewrites counts, the latest catalog-release block, and the recent-entry list. It does not turn a listed demo URL into a playtest. `robots.txt` stays as published. The sitemap only gains `/en/browser-ai-games/` when that page is added.
+`refreshHomepage()` rewrites counts, the latest catalog-release block, and the recent-entry list. It does not turn a listed demo URL into a playtest. `robots.txt` stays as published. The sitemap only gains `/en/games/browser-ai-games/` when that page is added. That path is required: the public domain forwards `/en/games/{slug}/` and does not forward `/en/browser-ai-games/`.
 
 Production HTML is packed into `pages.json.gz` and deployed on the Vercel project `3f343-home-refresh`. Do not deploy `ai-game-radar`. A merge does not rewrite pages already uploaded; the ingest has to pack and deploy the refreshed tree.
 

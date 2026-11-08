@@ -98,7 +98,7 @@ test("homepage counts, H1, and recent discoveries match the catalog", () => {
   assert.doesNotMatch(html, /Codex-Game-Studios/);
   assert.match(html, /agr-snapshot" content="2026-11-08"/);
   assert.match(html, /og:image" content="https:\/\/3f343\.com\/assets\/outpace\.png"/);
-  assert.match(html, /href="\/en\/browser-ai-games\/"/);
+  assert.match(html, /href="\/en\/games\/browser-ai-games\/"/);
   assert.doesNotMatch(html, /e\("#entries"\)\.innerHTML/);
   const json = JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
   const list = json["@graph"].find((item) => item["@type"] === "ItemList");
@@ -126,7 +126,7 @@ test("Chinese homepage uses the catalog date and Chinese descriptions", () => {
 test("discovery page lists only catalog demo URLs and does not claim playtests", () => {
   const html = renderDiscoveryPage(catalog);
   assert.equal(browserEntries(catalog).length, 4);
-  assert.match(html, /rel="canonical" href="https:\/\/3f343\.com\/en\/browser-ai-games\/"/);
+  assert.match(html, /rel="canonical" href="https:\/\/3f343\.com\/en\/games\/browser-ai-games\/"/);
   assert.match(html, /hreflang="en"/);
   assert.match(html, /Listed demo/);
   assert.match(html, /not a completed playtest/);
@@ -148,7 +148,7 @@ test("related links keep an existing rich head and enrich a thin page", () => {
   assert.match(updated, /Screenshots, playable demo and source of Outpace\./);
   assert.match(updated, /id="catalog-related"/);
   assert.match(updated, /href="\/en\/games\/nappy-1315\/"/);
-  assert.match(updated, /href="\/en\/browser-ai-games\/"/);
+  assert.match(updated, /href="\/en\/games\/browser-ai-games\/"/);
   assert.equal(updated, withRelatedLinks(updated, catalog.games[0], catalog.games, "en"));
 
   const thin = `<!doctype html><html lang="en"><head><title>Nappy | 3F343</title><link rel="canonical" href="https://3f343.com/en/games/nappy-1315/"></head><body><main><h1>Nappy</h1><p>Browser 2.5D city stroll with a pram.</p></main></body></html>`;

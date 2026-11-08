@@ -2,8 +2,11 @@
 
 const { sentence } = require("./homepage-refresh.cjs");
 
-const PAGE_PATH = "/en/browser-ai-games/";
-const PAGE_URL = "https://3f343.com/en/browser-ai-games/";
+// Public 3f343.com is fronted by edge rewrites. The only bilingual HTML
+// rewrite is ^/(zh|en)/games/([^/]+)/?$ to this project. A page outside
+// that pattern 404s on the custom domain even when this deployment has it.
+const PAGE_PATH = "/en/games/browser-ai-games/";
+const PAGE_URL = "https://3f343.com/en/games/browser-ai-games/";
 
 function escapeText(value) {
   return String(value)

@@ -43,7 +43,7 @@ function main() {
   const games = catalog.games || [];
   write(path.join(root, "en", "index.html"), refreshHomepage(read(path.join(root, "en", "index.html")), catalog, "en"));
   write(path.join(root, "zh", "index.html"), refreshHomepage(read(path.join(root, "zh", "index.html")), catalog, "zh"));
-  write(path.join(root, "en", "browser-ai-games", "index.html"), renderDiscoveryPage(catalog));
+  write(path.join(root, "en", "games", "browser-ai-games", "index.html"), renderDiscoveryPage(catalog));
   const sitemapPath = path.join(root, "sitemap.xml");
   if (fs.existsSync(sitemapPath)) write(sitemapPath, addSitemap(read(sitemapPath)));
   let details = 0;

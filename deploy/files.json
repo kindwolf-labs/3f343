@@ -491,14 +491,14 @@
     },
     {
       "file": "pages.json.gz",
-      "sha": "4c19edb8dd066605391a4318a3bd004f6e04936d",
-      "size": 1067602,
+      "sha": "2910b0f773ef235b99ad18458d0df5c53779bf2f",
+      "size": 1068448,
       "upload": true
     },
     {
       "file": "release-manifest.json",
-      "sha": "16a6b2dc6d9d798d965fef05b00ffd9117d2893a",
-      "size": 367333,
+      "sha": "7a2ee05c8017463b81ecf5fc43328c8bf29096dd",
+      "size": 367339,
       "upload": true
     }
   ]

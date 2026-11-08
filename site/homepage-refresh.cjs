@@ -190,9 +190,10 @@ function retitle(html) {
 }
 
 function addDiscoveryLink(html, locale) {
-  if (html.includes("/en/browser-ai-games/")) return html;
+  const { PAGE_PATH } = require("./discovery-page.cjs");
+  if (html.includes(PAGE_PATH)) return html;
   const label = locale === "zh" ? "浏览器试玩链接（英文）" : "Browser demos";
-  const link = `<a href="/en/browser-ai-games/">${label}</a>`;
+  const link = `<a href="${PAGE_PATH}">${label}</a>`;
   let next = html.replace("</nav><a class=\"lang\"", `${link}</nav><a class="lang"`);
   next = next.replace('<a href="/feeds/latest.xml">RSS</a>', `${link}<a href="/feeds/latest.xml">RSS</a>`);
   return next;
