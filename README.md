@@ -24,7 +24,16 @@ node scripts/render-game-detail.cjs --catalog catalog.json --patch-root out
 node scripts/render-game-detail.cjs --catalog catalog.json --slug gitche-gumee-1299 --locale en
 ```
 
-Current production HTML is packed into `pages.json.gz` and deployed on the Vercel project `3f343-home-refresh` (`src/build.cjs` only unpacks that archive). `3f343.com` serves that bundle. Merging this repo does not rewrite pages already deployed. The next ingest needs a full detail-page regen with this renderer, then the usual deploy. Leave `robots.txt` and `sitemap.xml` as they are.
+On every ingest, after `data/catalog.json` is final, refresh the homepages from that catalog and add related catalog links. This is what keeps the visible counts, the latest-release block, and the Recent discoveries JSON-LD on the same date and entries as the catalog:
+
+```bash
+node scripts/apply-catalog-refresh.cjs --root out
+node scripts/pack-home-refresh.cjs --root out --out dist
+```
+
+`refreshHomepage()` rewrites counts, the latest catalog-release block, and the recent-entry list. It does not turn a listed demo URL into a playtest. `robots.txt` stays as published. The sitemap only gains `/en/browser-ai-games/` when that page is added.
+
+Production HTML is packed into `pages.json.gz` and deployed on the Vercel project `3f343-home-refresh`. Do not deploy `ai-game-radar`. A merge does not rewrite pages already uploaded; the ingest has to pack and deploy the refreshed tree.
 
 ## Feedback welcome
 Better discovery sources, missed playable titles, or pushback on verification criteria — open an issue here or reply on the gist.
