@@ -2,7 +2,7 @@
 
 const assert = require("node:assert/strict");
 const test = require("node:test");
-const { countsFrom, refreshHomepage } = require("../site/homepage-refresh.cjs");
+const { countsFrom, refreshHomepage, sentence } = require("../site/homepage-refresh.cjs");
 const { browserEntries, renderDiscoveryPage } = require("../site/discovery-page.cjs");
 const { isEstablishedRich, withRelatedLinks } = require("../site/related-links.cjs");
 const { missingRichTags } = require("../site/detail-page.cjs");
@@ -137,6 +137,7 @@ test("discovery page lists only catalog demo URLs and does not claim playtests",
   assert.equal(data["@type"], "CollectionPage");
   assert.equal(data.mainEntity.itemListElement.length, 4);
   assert.equal(data.mainEntity.itemListElement[0].url, "https://3f343.com/en/games/nappy-1315/");
+  assert.equal(sentence("Free browser tactics: battles."), "browser tactics: battles.");
 });
 
 test("related links keep an existing rich head and enrich a thin page", () => {

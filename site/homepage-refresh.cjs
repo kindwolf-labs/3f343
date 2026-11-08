@@ -56,7 +56,10 @@ function latestDayGames(catalog) {
 }
 
 function sentence(value) {
-  const text = String(value || "").replace(/\s+/g, " ").trim();
+  let text = String(value || "").replace(/\s+/g, " ").trim();
+  text = text.replace(/^\s*free\s+/i, "");
+  text = text.replace(/\b(?:no[- ]signup|free to play|no signup)\b/gi, "");
+  text = text.replace(/\s+/g, " ").trim();
   if (!text) return "";
   const cut = text.split(/(?<=\.)\s/)[0];
   return cut.length > 280 ? cut.slice(0, 277).replace(/\s+\S*$/, "") + "…" : cut;
