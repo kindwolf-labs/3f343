@@ -1,0 +1,9 @@
+# 3F343 AI Game Radar
+Homepage: https://3f343.com/
+Bilingual pages: https://3f343.com/en/ and https://3f343.com/zh/
+Browser AI games with listed demos: https://3f343.com/en/games/browser-ai-games/
+Latest source-backed catalog entries: https://3f343.com/latest/
+Machine-readable JSON: https://3f343.com/feeds/latest.json
+RSS: https://3f343.com/feeds/latest.xml
+Full catalog: https://3f343.com/data/catalog.json
+These dates are source catalog dates, not game release dates. AI attribution is source-backed when evidence exists. Listing does not imply independent playtesting. A listed demo URL is not a completed playtest.
