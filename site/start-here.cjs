@@ -19,13 +19,12 @@ const SPECIAL_ACCESS = new Set([
 const SHORT_SOURCE =
   "(?:one[- ]sitting|about ten minutes|\\bten minutes\\b|a few minutes|under \\d{1,2} minutes|\\b(?:[1-9]|1\\d|20) minutes\\b|约十分钟|一局走完|几分钟)";
 const PHONE_SOURCE =
-  "(?:\\bphone\\b|\\bmobile\\b|\\btouch\\b|\\bswipe\\b|\\bgyro(?:scope)?\\b|手机|触屏|触控|滑动|陀螺)";
-const DEVICE_SOURCE =
-  "(?:desktop and phone support|phone gyroscope controls|phone gyroscope|phone join codes|touch controls|兼顾桌面与手机|手机陀螺仪|手机加码|触控)";
+  "(?:desktop and phone support|兼顾桌面与手机|面向手机|mobile landscape|Phone browser|手机浏览器)";
+const COMPANION_SOURCE = "(?:phone join codes|手机加码)";
 const RUNTIME_SOURCE =
   "(?:\\bwebgpu\\b|requires installing|install required|no browser demo|需安装|需要安装|原生 WebGPU)";
 const EARLY_SOURCE = "(?:wireframe|not yet a full|线框|还不是完整)";
-const HANDS_OFF_SOURCE = "(?:hands-off|camera flies|镜头自行|放手飞行)";
+const HANDS_OFF_SOURCE = "(?:hands-off|camera flies|no steering|镜头自行|放手飞行|没有方向舵)";
 const ARCADE_SOURCE = "(?:\\barcade\\b|fruit-slic|swipe to slice|切水果|街机)";
 const EXPLORE_SOURCE = "(?:\\b3d\\b|first-person|第一人称)";
 const DURATION_SOURCE =
@@ -33,7 +32,7 @@ const DURATION_SOURCE =
 
 const SHORT_RE = new RegExp(SHORT_SOURCE, "i");
 const PHONE_RE = new RegExp(PHONE_SOURCE, "i");
-const DEVICE_RE = new RegExp(DEVICE_SOURCE, "i");
+const COMPANION_RE = new RegExp(COMPANION_SOURCE, "i");
 const RUNTIME_RE = new RegExp(RUNTIME_SOURCE, "i");
 const EARLY_RE = new RegExp(EARLY_SOURCE, "i");
 const HANDS_OFF_RE = new RegExp(HANDS_OFF_SOURCE, "i");
@@ -48,30 +47,14 @@ const COPY = {
     nav: "Start here",
     kicker: "Start here",
     heading: "Try one of these first",
-    lead:
-      "A field sample of formal catalog entries that already have a listed demo and a gameplay still. The shapes differ so you can compare them. This is not a ranking, not a personal recommendation, and not a playtest.",
-    whyLabel: "Why it’s here.",
-    timeLabel: "Session length.",
-    deviceLabel: "Device or controls.",
-    skipLabel: "Might not suit you.",
-    demo: "Listed demo ↗",
-    page: "Catalog page",
-    note: "Listed demo link, not a completed playtest.",
-    noTime: "Catalog does not record a session length.",
-    timeQuote: "Catalog wording: ",
-    deviceQuote: "Catalog wording: ",
-    skipQuote: "Catalog wording: ",
-    webgpu: "Catalog wording: raw WebGPU.",
-    fable:
-      'If you want a licensed, listed demo from this mid-November Fable check, use the <a href="/en/games/fable-52-mid-november-2026/">field guide</a>. That page does not mean those titles were playtested.',
-    intentLead:
-      "If you want… Matched from catalog fields or wording, not a personal recommendation.",
+    lead: "Selected from public catalog text. Not playtested one by one.",
+    demo: "Play",
+    page: "Details",
+    source: "Source",
+    intentLead: "Filter by the play the catalog describes.",
     emptyIntent: "No catalog entries match these fields.",
     emptySearch: "No matching games. Try another search or filter.",
     fitTitle: "Is this for you?",
-    fitVoice:
-      "This summary follows the public catalog text. 3F343 is not claiming a review or a playtest.",
-    catalogSays: "Catalog says.",
     back: "Back to Start here",
     topic: "Browser AI games",
     relatedTitle: "Other catalog entries",
@@ -81,43 +64,30 @@ const COPY = {
       ["still", "Has a gameplay still"],
       ["sourced", "Source available"],
       ["short", "Short session"],
-      ["phone", "Phone / touch"],
+      ["phone", "Play on a phone"],
       ["runtime", "Needs a desktop or special runtime"],
     ],
     slots: {
-      arcade: "Arcade shape",
-      short: "Catalog already states a short session",
-      phone: "Catalog mentions a phone or touch control",
-      explore: "3D or first-person shape",
-      runtime: "Catalog names a special runtime",
-      caveat: "Catalog records an early or hands-off limit",
+      arcade: "Arcade",
+      short: "Short sitting",
+      phone: "Phone",
+      explore: "First person",
+      runtime: "Puzzle",
+      caveat: "Early build",
     },
   },
   zh: {
     nav: "先体验",
     kicker: "先体验",
     heading: "先从这几款里挑一款",
-    lead:
-      "下面是正式目录里已经有试玩链接和实机图的一组字段样本，用来对照不同玩法。不是排名，不是按个人记录推荐，也不是试玩结论。",
-    whyLabel: "为什么出现在这里。",
-    timeLabel: "时长。",
-    deviceLabel: "设备或操作。",
-    skipLabel: "可能不适合。",
-    demo: "目录中的试玩链接 ↗",
-    page: "目录页",
-    note: "这是目录里的试玩链接，不是完整试玩。",
-    noTime: "目录未记录时长。",
-    timeQuote: "目录用语：",
-    deviceQuote: "目录用语：",
-    skipQuote: "目录用语：",
-    webgpu: "目录用语：原生 WebGPU。",
-    fable: "",
-    intentLead: "按目的选。匹配目录字段或原文用词，不是个人推荐。",
+    lead: "基于公开资料筛选，未逐款完整试玩。",
+    demo: "试玩",
+    page: "介绍",
+    source: "源码",
+    intentLead: "按目录里写明的玩法筛。",
     emptyIntent: "没有目录条目匹配这些字段。",
     emptySearch: "没有匹配结果，请调整关键词或筛选条件。",
     fitTitle: "这款适合谁",
-    fitVoice: "这段说明沿用公开目录原文。3F343 不是在写评测，也不是在声称已经试玩。",
-    catalogSays: "目录这样写。",
     back: "返回先体验",
     topic: "浏览器 AI 游戏（英文）",
     relatedTitle: "其他目录条目",
@@ -127,16 +97,16 @@ const COPY = {
       ["still", "有实机图"],
       ["sourced", "有可查看来源"],
       ["short", "短时长"],
-      ["phone", "手机 / 触控"],
+      ["phone", "手机上能玩"],
       ["runtime", "需要桌面或特殊环境"],
     ],
     slots: {
-      arcade: "街机这种玩法",
-      short: "目录已写明短时长",
-      phone: "目录提到手机或触控",
-      explore: "3D 或第一人称",
-      runtime: "目录点明特殊运行环境",
-      caveat: "目录写明早期或放手限制",
+      arcade: "街机",
+      short: "短局",
+      phone: "手机",
+      explore: "第一人称",
+      runtime: "解谜",
+      caveat: "早期版本",
     },
   },
 };
@@ -182,12 +152,15 @@ function isShortSession(game) {
   return SHORT_RE.test(blob(game));
 }
 
-function isPhoneTouch(game) {
-  return PHONE_RE.test(blob(game));
+function isPhonePlay(game) {
+  const text = blob(game);
+  if (COMPANION_RE.test(text)) return false;
+  return PHONE_RE.test(text);
 }
 
-function isExplicitDevice(game) {
-  return DEVICE_RE.test(blob(game));
+function isRailPhone(game) {
+  if (!isPhonePlay(game) || isHandsOff(game)) return false;
+  return !/hub of little games|小游戏合集|\bage 5\b|五岁/.test(blob(game));
 }
 
 function isSpecialRuntime(game) {
@@ -221,41 +194,92 @@ function durationQuote(game, locale) {
   return other || "";
 }
 
-function deviceQuote(game, locale) {
-  return quoteMatch(localeText(game, locale), DEVICE_RE);
-}
-
-function skipQuote(game, locale) {
-  const text = localeText(game, locale);
-  const sentence = splitSentences(text).find((part) => EARLY_RE.test(part) || HANDS_OFF_RE.test(part));
-  if (sentence) return sentence;
-  if (RUNTIME_RE.test(text) && /webgpu/i.test(text)) {
-    return locale === "zh" ? "原生 WebGPU" : "raw WebGPU";
-  }
-  return "";
-}
-
-function whyHere(game, locale) {
+function playerAdvice(game, locale) {
+  const text = blob(game);
   const zh = locale === "zh";
-  const parts = [];
-  if (game.demo) parts.push(zh ? "目录中的试玩链接" : "a listed demo URL");
-  if (game.mediaType === "gameplay") {
-    parts.push(zh ? "实机图（mediaType 为 gameplay）" : "a gameplay still (mediaType gameplay)");
+  if (/swipe to slice|切水果|滑动切开/.test(text)) {
+    return zh
+      ? { hook: "滑动切水果，连击，躲开炸弹。", fit: "适合想玩滑动连击街机的人。" }
+      : { hook: "Swipe to slice fruit, chain combos, and dodge bombs.", fit: "For a swipe-combo arcade." };
   }
-  if (game.github) parts.push(zh ? "源码链接" : "a source link");
-  if (game.sourceVerified) {
-    parts.push(zh ? "来源在目录中标为已核验" : "source marked verified in the catalog");
+  if (/about ten minutes|约十分钟/.test(text)) {
+    return zh
+      ? {
+          hook: "沙漠平台跳跃，从 Dry Creek 走到 Dust King。",
+          fit: "适合想用很短时间打完一局平台跳跃的人。",
+          gate: "约十分钟。",
+        }
+      : {
+          hook: "Desert platformer, from Dry Creek to the Dust King.",
+          fit: "For a platformer you can finish in one short sitting.",
+          gate: "About ten minutes.",
+        };
   }
-  const joined = zh ? parts.join("、") : parts.join(", ");
-  let line = zh
-    ? `这条正式目录记录包含${joined}。`
-    : `This formal catalog entry records ${joined}.`;
-  if (game.license) {
-    line += zh
-      ? ` 目录记录的许可证：${game.license}。`
-      : ` License recorded on the entry: ${game.license}.`;
+  if (/one-sitting|一局走完/.test(text)) {
+    return zh
+      ? {
+          hook: "重走 Edmund Fitzgerald 的最后航程，先看海图再掌舵。",
+          fit: "适合想一局走完的航海。",
+          gate: "目录写明一局走完。",
+        }
+      : {
+          hook: "Sail the Edmund Fitzgerald’s last voyage, chart then helm.",
+          fit: "For one sitting of sailing.",
+          gate: "The catalog calls it a one-sitting run.",
+        };
   }
-  return line;
+  if (/return the diamond|归还钻石/.test(text)) {
+    return zh
+      ? {
+          hook: "躲开守卫，熄灯藏身，黎明前归还钻石。",
+          fit: "适合想在桌面或手机上玩宫殿潜行的人。",
+        }
+      : {
+          hook: "Slip past guards, snuff lanterns, and return the diamond before dawn.",
+          fit: "For palace stealth on a desktop or a phone.",
+        };
+  }
+  if (/three holograms|三个全息|黄金小牛/.test(text)) {
+    return zh
+      ? { hook: "用对的毛皮填满三个全息轮廓，让三头牛活过来。", fit: "适合想玩第一人称方块解谜的人。" }
+      : {
+          hook: "Fill three holograms with the right hide and bring three cows to life.",
+          fit: "For a first-person puzzle in a small block world.",
+        };
+  }
+  if (/webgpu/i.test(text)) {
+    return zh
+      ? {
+          hook: "把符文镶进石坛，让闪电给机器充能。",
+          fit: "适合想玩宝石电路解谜的人。",
+          gate: "约一小时，而且要能开原生 WebGPU。",
+        }
+      : {
+          hook: "Set runes so a captured bolt charges dead machines.",
+          fit: "For a gem-circuit puzzle.",
+          gate: "About an hour, and it needs raw WebGPU.",
+        };
+  }
+  if (/wireframe|线框/.test(text)) {
+    return zh
+      ? {
+          hook: "在山谷里走，卫兵会看见你、听见你。",
+          fit: "适合想玩第一人称潜行的人。",
+          gate: "画面刻意是线框，这一版还不是完整任务。",
+        }
+      : {
+          hook: "Walk a valley where the guards can see and hear you.",
+          fit: "For first-person stealth.",
+          gate: "Wireframe on purpose, and not a full mission yet.",
+        };
+  }
+  if (isPhonePlay(game)) {
+    const play = firstSentence(localeText(game, locale)).split(/Browser game with|浏览器可玩/)[0].trim();
+    return zh
+      ? { hook: play, fit: "适合想在桌面或手机上打开的人。", gate: "目录写明可以在手机上玩。" }
+      : { hook: play, fit: "For opening this on a desktop or a phone.", gate: "The catalog says it supports a phone." };
+  }
+  return { hook: firstSentence(localeText(game, locale)), fit: "", gate: "" };
 }
 
 function take(pool, used, predicate) {
@@ -271,7 +295,7 @@ function selectStartHere(games) {
   const picked = {
     arcade: take(pool, used, (game) => ARCADE_RE.test(blob(game))),
     short: take(pool, used, isShortSession),
-    phone: take(pool, used, isExplicitDevice) || take(pool, used, isPhoneTouch),
+    phone: take(pool, used, isRailPhone),
     explore: take(
       pool,
       used,
@@ -302,7 +326,7 @@ function matchesFilter(game, mode) {
   if (mode === "source") return Boolean(game.github);
   if (mode === "sourced") return Boolean(game.github || game.sourceVerified);
   if (mode === "short") return isShortSession(game);
-  if (mode === "phone") return isPhoneTouch(game);
+  if (mode === "phone") return isPhonePlay(game);
   if (mode === "runtime") return isSpecialRuntime(game);
   return true;
 }
@@ -322,22 +346,22 @@ function row(className, label, value) {
 function renderCard(pick, locale) {
   const copy = COPY[locale];
   const game = pick.game;
-  const hook = firstSentence(localeText(game, locale));
-  const time = durationQuote(game, locale);
-  const device = deviceQuote(game, locale);
-  const skip = skipQuote(game, locale);
+  const advice = playerAdvice(game, locale);
   const page = `/${locale}/games/${game.slug}/`;
   const img = imageUrl(game);
   const media = img
-    ? `<a href="${esc(page)}"><img src="${esc(img)}" alt="${esc(game.name)}"></a>`
+    ? `<a class="start-thumb" href="${esc(page)}"><img src="${esc(img)}" alt=""></a>`
     : "";
-  return `<article class="start-card" data-slot="${esc(pick.slot)}" data-slug="${esc(game.slug)}">${media}<div class="start-body"><p class="start-slot">${esc(copy.slots[pick.slot])}</p><h3><a href="${esc(page)}">${esc(game.name)}</a></h3><p class="start-hook">${esc(hook)}</p>${row("start-why", copy.whyLabel, whyHere(game, locale))}${row("start-time", copy.timeLabel, time ? copy.timeQuote + time : "")}${row("start-device", copy.deviceLabel, device ? copy.deviceQuote + device : "")}${row("start-skip", copy.skipLabel, skip ? copy.skipQuote + skip : "")}<p class="start-actions">${game.demo ? `<a class="start-demo" href="${esc(game.demo)}" target="_blank" rel="noopener">${esc(copy.demo)}</a>` : ""}<a href="${esc(page)}">${esc(copy.page)}</a></p><p class="start-note">${esc(copy.note)}</p></div></article>`;
+  const gate = advice.gate ? `<p class="start-gate">${esc(advice.gate)}</p>` : "";
+  const source = game.github
+    ? `<a class="start-source" href="${esc(game.github)}" target="_blank" rel="noopener">${esc(copy.source)}</a>`
+    : "";
+  return `<article class="start-card" data-slot="${esc(pick.slot)}" data-slug="${esc(game.slug)}"><div class="start-body"><p class="start-slot">${esc(copy.slots[pick.slot])}</p><h3><a href="${esc(page)}">${esc(game.name)}</a></h3><p class="start-hook">${esc(advice.hook)}</p><p class="start-fit">${esc(advice.fit)}</p>${gate}<p class="start-actions">${game.demo ? `<a class="start-demo" href="${esc(game.demo)}" target="_blank" rel="noopener">${esc(copy.demo)}</a>` : ""}<a href="${esc(page)}">${esc(copy.page)}</a>${source}</p></div>${media}</article>`;
 }
 
 function renderRail(picks, locale) {
   const copy = COPY[locale];
-  const fable = copy.fable ? `<p class="start-fable">${copy.fable}</p>` : "";
-  return `<section id="start" aria-labelledby="start-heading"><p class="start-kicker">${esc(copy.kicker)}</p><h2 id="start-heading">${esc(copy.heading)}</h2><p class="start-lead">${esc(copy.lead)}</p><div class="start-grid">${picks.map((pick) => renderCard(pick, locale)).join("")}</div>${fable}</section>`;
+  return `<section id="start" aria-labelledby="start-heading"><h2 id="start-heading">${esc(copy.heading)}</h2><p class="start-lead">${esc(copy.lead)}</p><div class="start-grid">${picks.map((pick) => renderCard(pick, locale)).join("")}</div></section>`;
 }
 
 function renderIntent(locale) {
@@ -351,11 +375,11 @@ function renderIntent(locale) {
 function filterScript(locale) {
   const copy = COPY[locale];
   return `function catalogBlob(g){return [g&&g.description,g&&g.descriptionZh].filter(Boolean).join("\\n")}
-function intentMatch(g,mode){if(mode==="all")return true;if(mode==="screens"||mode==="still")return g.mediaType==="gameplay";if(mode==="play"||mode==="browser")return !!g.demo;if(mode==="source")return !!g.github;if(mode==="sourced")return !!(g.github||g.sourceVerified);if(mode==="short")return /${SHORT_SOURCE}/i.test(catalogBlob(g));if(mode==="phone")return /${PHONE_SOURCE}/i.test(catalogBlob(g));if(mode==="runtime")return ["install","requires-installation-or-source","local-browser","emulator"].includes(g.accessType||"")||/${RUNTIME_SOURCE}/i.test(catalogBlob(g));return true}
+function intentMatch(g,mode){const t=catalogBlob(g);if(mode==="all")return true;if(mode==="screens"||mode==="still")return g.mediaType==="gameplay";if(mode==="play"||mode==="browser")return !!g.demo;if(mode==="source")return !!g.github;if(mode==="sourced")return !!(g.github||g.sourceVerified);if(mode==="short")return /${SHORT_SOURCE}/i.test(t);if(mode==="phone")return !/${COMPANION_SOURCE}/i.test(t)&&/${PHONE_SOURCE}/i.test(t);if(mode==="runtime")return ["install","requires-installation-or-source","local-browser","emulator"].includes(g.accessType||"")||/${RUNTIME_SOURCE}/i.test(t);return true}
 function emptyCatalogMessage(){if(mode==="short"||mode==="phone"||mode==="runtime"||mode==="browser"||mode==="still"||mode==="sourced")return ${JSON.stringify(copy.emptyIntent)};return ${JSON.stringify(copy.emptySearch)};}`;
 }
 
-const START_CSS = `<style id="start-here">#start{margin:22px 0 8px;padding:18px 16px 8px;border:1px solid #efb767;border-radius:16px;background:#141923}#start .start-kicker{margin:0;color:#efb767;font-size:11px;letter-spacing:.12em;font-weight:800;text-transform:uppercase}#start h2{margin:6px 0 8px;font-size:clamp(28px,4vw,40px);letter-spacing:-.04em}#start .start-lead,#start .start-fable,#intent .caption{color:#b7c3d1;font-size:14px}#start .start-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}#start .start-card{display:flex;flex-direction:column;min-width:0;background:#0e131b;border:1px solid #293340;border-radius:12px;overflow:hidden}#start .start-card img{width:100%;aspect-ratio:16/9;object-fit:cover;background:#263348;display:block}#start .start-body{padding:12px 14px 14px}#start .start-slot{margin:0;color:#efb767;font-size:11px;font-weight:700}#start h3{margin:4px 0 8px;font-size:20px;line-height:1.2}#start .start-hook,#start .start-why,#start .start-time,#start .start-device,#start .start-skip,#start .start-note{margin:0 0 8px;font-size:13px;color:#d5dde6;overflow-wrap:anywhere}#start .start-note{color:#9aa8b7;font-size:12px}#start .start-actions{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 8px}#start .start-actions a{display:inline-block;padding:8px 10px;border-radius:8px;border:1px solid #4d5b6c;font-size:13px}#start .start-demo{background:#fff;color:#111;border-color:#fff;font-weight:700}#intent{margin:0 0 12px}#intent .filters{margin-bottom:0}@media(max-width:800px){#start .start-grid{grid-template-columns:1fr}#start{padding:14px 12px 4px}}@media(max-width:720px){header{height:auto;align-items:flex-start;flex-wrap:wrap;padding:10px 0}header nav{display:flex;flex-wrap:wrap;gap:8px 14px;width:100%}}</style>`;
+const START_CSS = `<style id="start-here">#start{margin:8px 0 0;padding:0}#start h2{margin:0 0 4px;font-size:clamp(26px,4vw,34px);letter-spacing:-.04em}#start .start-lead{margin:0 0 10px;color:#efb767;font-size:13px}#start .start-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}#start .start-card{display:grid;grid-template-columns:minmax(0,1fr) 92px;gap:10px;align-items:start;min-width:0;background:#141923;border:1px solid #293340;border-radius:12px;padding:10px 12px}#start .start-thumb img{width:92px;height:68px;object-fit:cover;border-radius:8px;background:#263348;display:block}#start .start-slot{margin:0;color:#efb767;font-size:11px;font-weight:700}#start h3{margin:1px 0 4px;font-size:18px;line-height:1.15}#start .start-hook{margin:0 0 4px;font-size:14px;line-height:1.35}#start .start-fit{margin:0 0 4px;font-size:14px;font-weight:700;line-height:1.35}#start .start-gate{margin:0 0 6px;color:#d7c49a;font-size:12px;line-height:1.35}#start .start-actions{display:flex;flex-wrap:wrap;gap:8px 10px;margin:6px 0 0;align-items:center}#start .start-actions a{font-size:13px}#start .start-demo{background:#fff;color:#111;border-radius:8px;padding:6px 10px;font-weight:700}#start .start-source{color:#9aa8b7;font-size:12px}#intent{margin:0 0 10px}#intent .caption{margin:0 0 8px}#intent .filters{margin-bottom:0}@media(max-width:800px){#start .start-grid{grid-template-columns:1fr}}@media(max-width:720px){header{height:auto;align-items:flex-start;flex-wrap:wrap;padding:8px 0}header nav{display:flex;flex-wrap:wrap;gap:8px 12px;width:100%}#start .start-card{grid-template-columns:minmax(0,1fr) 76px;padding:8px 10px}#start .start-thumb img{width:76px;height:56px}}</style>`;
 
 function patchHomepage(html, picks, locale) {
   if (!COPY[locale]) throw new Error("Unknown locale " + locale);
@@ -391,13 +415,9 @@ function patchHomepage(html, picks, locale) {
 
 function fitBlock(game, pick, locale) {
   const copy = COPY[locale];
-  const hook = firstSentence(localeText(game, locale));
-  const time = durationQuote(game, locale);
-  const device = deviceQuote(game, locale);
-  const skip = skipQuote(game, locale);
-  const home = `/${locale}/#start`;
-  const topic = "/en/games/browser-ai-games/";
-  return `<aside id="fit"><h2>${esc(copy.fitTitle)}</h2><p>${esc(copy.fitVoice)}</p><p><strong>${esc(copy.catalogSays)}</strong> ${esc(hook)}</p>${row("start-why", copy.whyLabel, whyHere(game, locale))}<p><strong>${esc(copy.timeLabel)}</strong> ${esc(time ? copy.timeQuote + time : copy.noTime)}</p>${device ? row("start-device", copy.deviceLabel, copy.deviceQuote + device) : ""}${skip ? row("start-skip", copy.skipLabel, copy.skipQuote + skip) : ""}<p><a href="${esc(home)}">${esc(copy.back)}</a> · <a href="${esc(topic)}">${esc(copy.topic)}</a></p></aside>`;
+  const advice = playerAdvice(game, locale);
+  const gate = advice.gate ? `<p class="start-gate">${esc(advice.gate)}</p>` : "";
+  return `<aside id="fit"><h2>${esc(copy.fitTitle)}</h2><p class="start-hook">${esc(advice.hook)}</p><p class="start-fit">${esc(advice.fit)}</p>${gate}<p class="start-lead">${esc(copy.lead)}</p><p><a href="/${locale}/#start">${esc(copy.back)}</a> · <a href="/en/games/browser-ai-games/">${esc(copy.topic)}</a></p></aside>`;
 }
 
 function neighborBlock(game, games, locale) {
@@ -419,17 +439,15 @@ function neighborBlock(game, games, locale) {
 
 function patchDetail(html, game, pick, games, locale) {
   if (html.includes('id="fit"')) return html;
-  const marker = locale === "zh" ? "<p>收录日期:" : "<p>Cataloged:";
   const block = fitBlock(game, pick, locale);
   let next = html;
-  if (next.includes(marker)) next = next.replace(marker, block + marker);
-  else if (next.includes("</h1>")) next = next.replace("</h1>", "</h1>" + block);
+  if (next.includes("</h1>")) next = next.replace("</h1>", "</h1>" + block);
   else throw new Error("Detail insertion point missing for " + game.slug);
   if (!next.includes('id="catalog-related"') && next.includes("</main>")) {
     next = next.replace("</main>", neighborBlock(game, games, locale) + "</main>");
   }
   const style =
-    "<style>aside#fit{margin:16px 0;padding:14px 16px;border:1px solid #efb767;border-radius:12px;background:#141923}aside#fit h2{margin:0 0 8px;font-size:22px}#catalog-related{margin-top:18px}</style>";
+    "<style>aside#fit{margin:12px 0;padding:12px 14px;border:1px solid #efb767;border-radius:12px;background:#141923}aside#fit h2{margin:0 0 6px;font-size:22px}aside#fit .start-hook,aside#fit .start-fit,aside#fit .start-gate,aside#fit .start-lead{margin:0 0 6px}aside#fit .start-fit{font-weight:700}aside#fit .start-lead{color:#efb767;font-size:13px}#catalog-related{margin-top:18px}</style>";
   if (!next.includes('id="start-here-detail"')) {
     next = next.replace("</head>", style.replace("<style>", '<style id="start-here-detail">') + "</head>");
   }
@@ -441,19 +459,17 @@ module.exports = {
   SLOT_ORDER,
   SHORT_RE,
   PHONE_RE,
-  DEVICE_RE,
   RUNTIME_RE,
   durationQuote,
   isHostedPlayable,
-  isPhoneTouch,
+  isPhonePlay,
   isShortSession,
   isSpecialRuntime,
   matchesFilter,
   patchDetail,
   patchHomepage,
+  playerAdvice,
   renderIntent,
   renderRail,
   selectStartHere,
-  skipQuote,
-  whyHere,
 };
