@@ -1,0 +1,42 @@
+{
+  "productionDeployment": "dpl_6izEMLtaFGv4H1EyUsaukXpmfdDK",
+  "verifiedAt": "2026-11-15T15:12:00Z",
+  "chosenPack": "candidate-morning-20261115",
+  "identicalTo": "release-fable-check-20261115",
+  "notChosen": "release-catalog-1321-20261114",
+  "reason": "Morning and fable-check packs are byte-identical. Their en/index.html, zh/index.html, data/catalog.json, llms.txt, robots.txt, latest/index.html, browser-ai-games page, and fable page match the live origin fetched 2026-11-15T15:12Z. The 2026-11-14 pack has the same catalog bytes but a different topic page and sitemap and no fable page.",
+  "inputs": {
+    "candidate-morning-20261115/pages.json.gz": {
+      "sha256": "9d7579d6806b9171b7d94f332f0f59675527c2e79d58a2b87d567cee846575ae",
+      "size": 1079910
+    },
+    "candidate-morning-20261115/release-manifest.json": {
+      "sha256": "6f068e44ca8321cff41b2a548997a449b33de3d761fd258d8ebbee28fc47da1a",
+      "size": 370497
+    },
+    "release-fable-check-20261115/pages.json.gz": {
+      "sha256": "9d7579d6806b9171b7d94f332f0f59675527c2e79d58a2b87d567cee846575ae",
+      "size": 1079910
+    },
+    "release-fable-check-20261115/release-manifest.json": {
+      "sha256": "6f068e44ca8321cff41b2a548997a449b33de3d761fd258d8ebbee28fc47da1a",
+      "size": 370497
+    },
+    "release-catalog-1321-20261114/pages.json.gz": {
+      "sha256": "72683e3e2c79bf20a75a0a8ee5f613cc9214d2af77fae4e9e2654816560edfa2",
+      "size": 1074697
+    },
+    "release-catalog-1321-20261114/release-manifest.json": {
+      "sha256": "0197ae9ad639b199556a7360f9eb5571b3faecf2147d1a3aa3af5ca42ccc29d7",
+      "size": 370357
+    },
+    "release-catalog-1321-20261114/build_candidate.py": {
+      "sha256": "9a094dd97ceaca46baeb39e21bf239301dcbd36a0b6ab3f7058a0691d7b55bc2",
+      "size": 27744
+    },
+    "fable-52-mid-november-2026.html": {
+      "sha256": "1d953a46878a060e96641a590434f6fb8914281cd754164a9ec962f196b14134",
+      "size": 17052
+    }
+  }
+}
