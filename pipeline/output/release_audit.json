@@ -1,0 +1,9 @@
+{
+  "catalogCount": 1321,
+  "evidenceRecords": 6,
+  "llm": false,
+  "network": false,
+  "pipeline": "wp4-offline-v1",
+  "scheduler": false,
+  "writesProduction": false
+}

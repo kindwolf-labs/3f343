@@ -37,9 +37,10 @@
       "image": "/media/vaquitas-de-bloque.jpg",
       "demoUrl": "https://vaquitas-de-bloque.vercel.app/",
       "gameplay": "Fill three holograms with the right hide and bring three cows to life in a small block world.",
+      "gameplayNote": "Adventure mode brings rustlers at night.",
       "fit": "A first-person puzzle.",
       "notFit": "",
-      "barrier": "Adventure mode brings rustlers at night.",
+      "barrier": "",
       "unknown": "",
       "authorshipNote": "The catalog credits the build to Claude Fable 5.2. That is a build credit, not a claim that a model runs during play. It also names a second mode. Which mode the demo opens in: Unknown.",
       "urlCheck": {

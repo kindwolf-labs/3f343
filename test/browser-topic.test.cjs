@@ -60,6 +60,11 @@ test("the existing topic keeps its list and folds checks under the six picks", (
   assert.match(mirage, /catalog/i);
   assert.match(face, /ten minutes/i);
   assert.equal(/2026-11-15T/.test(face), false);
+  const vaquitas = after.slice(after.indexOf('id="pick-vaquitas-de-bloque-1321"'), after.indexOf("</article>", after.indexOf('id="pick-vaquitas-de-bloque-1321"')));
+  const vaquitasFace = vaquitas.slice(0, vaquitas.indexOf("<details"));
+  assert.match(vaquitasFace, /Gameplay note\./);
+  assert.match(vaquitasFace, /rustlers at night/);
+  assert.equal(vaquitasFace.includes("Known barrier"), false);
 });
 
 test("candidate keeps every catalog id and leaves fable, sitemap, and latest untouched", () => {

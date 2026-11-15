@@ -1,0 +1,122 @@
+[
+  {
+    "aiRole": "authoring_credit",
+    "aiRoleEvidence": "Catalog attributes a commit to Claude Opus 5.5 and names C and WASM as how the game runs. That is not a claim a model runs during play.",
+    "catalogId": 1301,
+    "demoKey": "https://mirage.jaybulb.com/",
+    "demoUrl": "https://mirage.jaybulb.com",
+    "name": "Mirage",
+    "openQuestions": [
+      "What the catalog's ten-minute figure counts."
+    ],
+    "playtestedAt": null,
+    "slug": "mirage-1301",
+    "sourceCheckedAt": "2026-11-15T14:41:04Z",
+    "sourceKey": "https://github.com/nulljosh/mirage",
+    "sourceUrl": "https://github.com/nulljosh/mirage",
+    "stableId": "catalog:1301",
+    "urlCheckedAt": "2026-11-15T15:49:33Z",
+    "urlMeaning": "HTTP response is not a playtest",
+    "urlState": "endpoint_reachable"
+  },
+  {
+    "aiRole": "authoring_credit",
+    "aiRoleEvidence": "Catalog splits the credit: Claude Code for the build, and Gemini or GPT image plugins for the art. The art sentence is not a claim about play.",
+    "catalogId": 1309,
+    "demoKey": "https://hoardhopper.synapticnoise.com/",
+    "demoUrl": "https://hoardhopper.synapticnoise.com",
+    "name": "Hoard Hopper",
+    "openQuestions": [
+      "Whether the art plugins were opened in the repository."
+    ],
+    "playtestedAt": null,
+    "slug": "hoard-hopper-1309",
+    "sourceCheckedAt": "2026-11-15T14:41:04Z",
+    "sourceKey": "https://github.com/zeveck/hoardhopper",
+    "sourceUrl": "https://github.com/zeveck/hoardhopper",
+    "stableId": "catalog:1309",
+    "urlCheckedAt": "2026-11-15T15:49:33Z",
+    "urlMeaning": "HTTP response is not a playtest",
+    "urlState": "endpoint_reachable"
+  },
+  {
+    "aiRole": "authoring_credit",
+    "aiRoleEvidence": "Catalog says many commits are Co-Authored-By Claude Opus or Sonnet. That is not a claim the runner calls a model while you play.",
+    "catalogId": 1310,
+    "demoKey": "https://dinopixel-game.vercel.app/",
+    "demoUrl": "https://dinopixel-game.vercel.app/",
+    "name": "DinoPixel",
+    "openQuestions": [
+      "What the catalog phrase offline PWA means."
+    ],
+    "playtestedAt": null,
+    "slug": "dinopixel-1310",
+    "sourceCheckedAt": "2026-11-15T14:41:04Z",
+    "sourceKey": "https://github.com/rzazo24/dinopixel-game",
+    "sourceUrl": "https://github.com/rzazo24/dinopixel-game",
+    "stableId": "catalog:1310",
+    "urlCheckedAt": "2026-11-15T15:49:33Z",
+    "urlMeaning": "HTTP response is not a playtest",
+    "urlState": "endpoint_reachable"
+  },
+  {
+    "aiRole": "authoring_credit",
+    "aiRoleEvidence": "Catalog says commits are Co-Authored-By Claude Opus 5.5. It calls the opponent AI. What that opponent is stays unknown. This is not an LLM classification.",
+    "catalogId": 1311,
+    "demoKey": "https://lewisca.github.io/Balloon-Stack",
+    "demoUrl": "https://lewisca.github.io/Balloon-Stack/",
+    "name": "Balloon Stack",
+    "openQuestions": [
+      "What the versus opponent is."
+    ],
+    "playtestedAt": null,
+    "slug": "balloon-stack-1311",
+    "sourceCheckedAt": "2026-11-15T14:41:04Z",
+    "sourceKey": "https://github.com/lewisca/Balloon-Stack",
+    "sourceUrl": "https://github.com/lewisca/Balloon-Stack",
+    "stableId": "catalog:1311",
+    "urlCheckedAt": "2026-11-15T15:49:33Z",
+    "urlMeaning": "HTTP response is not a playtest",
+    "urlState": "endpoint_reachable"
+  },
+  {
+    "aiRole": "authoring_credit",
+    "aiRoleEvidence": "Catalog says the README credits Claude Code and that the picture and soundtrack are generated in code. That is not a claim a model runs during play.",
+    "catalogId": 1320,
+    "demoKey": "https://pulp-panic.fly.dev/",
+    "demoUrl": "https://pulp-panic.fly.dev/",
+    "name": "Pulp Panic",
+    "openQuestions": [
+      "Whether the demo matches docs/screenshots/gameplay.jpg."
+    ],
+    "playtestedAt": null,
+    "slug": "pulp-panic-1320",
+    "sourceCheckedAt": "2026-11-15T14:41:04Z",
+    "sourceKey": "https://github.com/buildatscale-tv/pulp-panic",
+    "sourceUrl": "https://github.com/buildatscale-tv/pulp-panic",
+    "stableId": "catalog:1320",
+    "urlCheckedAt": "2026-11-15T15:49:33Z",
+    "urlMeaning": "HTTP response is not a playtest",
+    "urlState": "endpoint_reachable"
+  },
+  {
+    "aiRole": "authoring_credit",
+    "aiRoleEvidence": "Catalog credits the build to Claude Fable 5.2. That is a build credit, not a claim a model runs during play.",
+    "catalogId": 1321,
+    "demoKey": "https://vaquitas-de-bloque.vercel.app/",
+    "demoUrl": "https://vaquitas-de-bloque.vercel.app/",
+    "name": "Vaquitas de Bloque",
+    "openQuestions": [
+      "Which mode the demo opens in."
+    ],
+    "playtestedAt": null,
+    "slug": "vaquitas-de-bloque-1321",
+    "sourceCheckedAt": "2026-11-15T14:41:04Z",
+    "sourceKey": "https://github.com/ivolivares/vaquitas-de-bloque",
+    "sourceUrl": "https://github.com/ivolivares/vaquitas-de-bloque",
+    "stableId": "catalog:1321",
+    "urlCheckedAt": "2026-11-15T15:49:33Z",
+    "urlMeaning": "HTTP response is not a playtest",
+    "urlState": "endpoint_reachable"
+  }
+]

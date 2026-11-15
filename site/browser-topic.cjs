@@ -34,7 +34,7 @@ function esc(value) {
 }
 
 function faceText(card) {
-  return [card.gameplay, card.fit, card.notFit, card.barrier, card.unknown].filter(Boolean).join("\n");
+  return [card.gameplay, card.gameplayNote, card.fit, card.notFit, card.barrier, card.unknown].filter(Boolean).join("\n");
 }
 
 function cardText(card) {
@@ -112,10 +112,11 @@ function verifyTopicRules(doc, catalog, options = {}) {
 function renderCard(card, sourceCheckedAt) {
   const page = `/en/games/${card.slug}/`;
   const check = card.urlCheck;
+  const note = card.gameplayNote ? `<p><strong>Gameplay note.</strong> ${esc(card.gameplayNote)}</p>` : "";
   const notFit = card.notFit ? `<p><strong>May not fit.</strong> ${esc(card.notFit)}</p>` : "";
   const barrier = card.barrier ? `<p><strong>Known barrier.</strong> ${esc(card.barrier)}</p>` : "";
   const unknown = card.unknown ? `<p>${esc(card.unknown)}</p>` : "";
-  return `<article class="topic-card" id="pick-${esc(card.slug)}" data-catalog-id="${esc(card.catalogId)}"><a class="topic-shot" href="${esc(page)}"><img src="${esc(card.image)}" alt="${esc(card.name)}"></a><div class="topic-copy"><h2><a href="${esc(page)}">${esc(card.name)}</a></h2><p>${esc(card.gameplay)}</p><p class="for"><strong>For.</strong> ${esc(card.fit)}</p>${notFit}${barrier}${unknown}<p class="topic-links"><a class="play" href="${esc(card.demoUrl)}" target="_blank" rel="noopener">Play</a> <a href="${esc(page)}">Details</a></p><details class="sources"><summary>Sources and checks</summary><p data-source-checked="${esc(sourceCheckedAt)}">Source check: catalog text read ${esc(sourceCheckedAt)}. Repository files were not re-read.</p><p data-url-checked="${esc(check.checkedAt)}">URL check: HTTP ${esc(check.status)}, ${esc(check.contentType)}, ${esc(check.checkedAt)}. A response is not a playtest.</p><p data-playtested="">Playtest: Not done.</p><p>${esc(card.authorshipNote)}</p></details></div></article>`;
+  return `<article class="topic-card" id="pick-${esc(card.slug)}" data-catalog-id="${esc(card.catalogId)}"><a class="topic-shot" href="${esc(page)}"><img src="${esc(card.image)}" alt="${esc(card.name)}"></a><div class="topic-copy"><h2><a href="${esc(page)}">${esc(card.name)}</a></h2><p>${esc(card.gameplay)}</p>${note}<p class="for"><strong>For.</strong> ${esc(card.fit)}</p>${notFit}${barrier}${unknown}<p class="topic-links"><a class="play" href="${esc(card.demoUrl)}" target="_blank" rel="noopener">Play</a> <a href="${esc(page)}">Details</a></p><details class="sources"><summary>Sources and checks</summary><p data-source-checked="${esc(sourceCheckedAt)}">Source check: catalog text read ${esc(sourceCheckedAt)}. Repository files were not re-read.</p><p data-url-checked="${esc(check.checkedAt)}">URL check: HTTP ${esc(check.status)}, ${esc(check.contentType)}, ${esc(check.checkedAt)}. A response is not a playtest.</p><p data-playtested="">Playtest: Not done.</p><p>${esc(card.authorshipNote)}</p></details></div></article>`;
 }
 
 function renderTopic(doc = CARDS, options = {}) {
