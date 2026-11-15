@@ -112,6 +112,8 @@ test("patched homepages put the rail above the diary and keep the live counts", 
     assert.match(rail, locale === "zh" ? /线框/ : /wireframe/i);
     assert.equal(rail.includes("mediaType"), false);
     assert.equal(rail.includes(locale === "zh" ? "适合想玩滑动连击街机的人" : "swipe-combo arcade"), true);
+    assert.equal(rail.includes('href="/en/games/browser-ai-games/"'), true);
+    assert.equal(rail.includes(locale === "zh" ? "把资料核对、链接核对和试玩记录分开写。" : "keeps the source check, the URL check, and the playtest apart."), true);
     assert.equal(rail.includes(locale === "zh" ? "基于公开资料筛选，未逐款完整试玩。" : "Not playtested one by one."), true);
     assert.equal((rail.match(/未逐款完整试玩|Not playtested one by one/g) || []).length, 1);
     assert.equal(rail.includes("quizlight") || rail.includes("phone join"), false);

@@ -1,6 +1,16 @@
 {
   "productionDeployment": "dpl_6izEMLtaFGv4H1EyUsaukXpmfdDK",
   "verifiedAt": "2026-11-15T15:12:00Z",
+  "recheckedAt": "2026-11-15T15:49:33Z",
+  "recheck": "Public GET of catalog, en, zh, llms.txt, robots.txt, latest, browser-ai-games, and the fable page matched the 15:12Z hashes. The snapshot was not stale and was not overwritten. /en/latest/ is still the front door and is not in this pack.",
+  "staticAssets": {
+    "verified": "100/100 manifest images including favicon.svg",
+    "mismatch": 0,
+    "packages": {
+      "3f343-static-images-part1-20261115.zip": "e17f220a37a072762adc12be14463ec374300e2eb3625905c3f0a2bcb8fb48d8",
+      "3f343-static-images-part2-20261115.zip": "7bcd55c0dfae2f650d8c8d8b868953bde1b03b19e6237cf3e7b987584bd88fcd"
+    }
+  },
   "chosenPack": "candidate-morning-20261115",
   "identicalTo": "release-fable-check-20261115",
   "notChosen": "release-catalog-1321-20261114",

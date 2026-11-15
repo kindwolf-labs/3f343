@@ -1,0 +1,15 @@
+{
+  "ok": true,
+  "cards": 6,
+  "slugs": [
+    "pulp-panic-1320",
+    "vaquitas-de-bloque-1321",
+    "balloon-stack-1311",
+    "dinopixel-1310",
+    "hoard-hopper-1309",
+    "mirage-1301"
+  ],
+  "sourceCheckedAt": "2026-11-15T14:41:04Z",
+  "urlCheckedAt": "2026-11-15T15:49:33Z",
+  "playtestedAt": null
+}

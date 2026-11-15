@@ -11,8 +11,9 @@
 
 const fs = require("fs");
 const path = require("path");
+const { CARDS, patchTopic, verifyTopicRules } = require("../site/browser-topic.cjs");
 const { patchDetail, patchHomepage, selectStartHere } = require("../site/start-here.cjs");
-const { loadSnapshot, repack, verifySnapshot } = require("./production-pack.cjs");
+const { loadSnapshot, repack, sha256, verifySnapshot } = require("./production-pack.cjs");
 
 function arg(name) {
   const index = process.argv.indexOf(name);
@@ -40,24 +41,50 @@ function buildCandidate(snapshot = loadSnapshot()) {
   if (pages["data/catalog.json"] !== snapshot.pages["data/catalog.json"]) {
     throw new Error("candidate changed catalog bytes");
   }
+  const topicKey = "en/games/browser-ai-games/index.html";
+  const rules = verifyTopicRules(CARDS, catalog, { manifest: snapshot.manifest });
+  pages[topicKey] = patchTopic(pages[topicKey], CARDS);
+  const zhTopic = "zh/games/browser-ai-games/index.html";
+  if (pages[zhTopic] !== snapshot.pages[zhTopic]) throw new Error("refusing to add a second topic locale");
+  const fableKey = "en/games/fable-52-mid-november-2026/index.html";
+  if (pages[fableKey] !== snapshot.pages[fableKey]) throw new Error("candidate changed the fable page");
   if (!pages["en/index.html"].includes('id="start"')) throw new Error("rail missing");
   if (!pages["zh/index.html"].includes("先从这几款里挑一款")) throw new Error("zh rail missing");
+  if (!pages["en/index.html"].includes('href="/en/games/browser-ai-games/"')) throw new Error("en topic link missing");
+  if (!pages["zh/index.html"].includes('href="/en/games/browser-ai-games/"')) throw new Error("zh topic link missing");
   const changed = Object.keys(pages).filter((key) => pages[key] !== snapshot.pages[key]).sort();
-  return { pages, picks, changed, gzip: repack(pages) };
+  const diff = changed.map((key) => ({
+    path: key,
+    beforeBytes: Buffer.byteLength(snapshot.pages[key]),
+    afterBytes: Buffer.byteLength(pages[key]),
+    beforeSha256: sha256(Buffer.from(snapshot.pages[key], "utf8")),
+    afterSha256: sha256(Buffer.from(pages[key], "utf8")),
+  }));
+  return { pages, picks, changed, diff, rules, gzip: repack(pages) };
 }
 
 function main() {
   const out = arg("--out");
   const candidate = buildCandidate();
   const summary = {
+    production: false,
     picks: candidate.picks.map((pick) => pick.slot + ":" + pick.game.slug),
     changed: candidate.changed,
+    rules: candidate.rules,
     gzipBytes: candidate.gzip.length,
+    gzipSha256: sha256(candidate.gzip),
   };
   if (out) {
     fs.mkdirSync(out, { recursive: true });
     fs.writeFileSync(path.join(out, "pages.json.gz"), candidate.gzip);
     fs.writeFileSync(path.join(out, "summary.json"), JSON.stringify(summary, null, 2) + "\n");
+    fs.writeFileSync(path.join(out, "diff.json"), JSON.stringify(candidate.diff, null, 2) + "\n");
+    fs.writeFileSync(path.join(out, "topic-verification.json"), JSON.stringify(candidate.rules, null, 2) + "\n");
+    for (const key of candidate.changed) {
+      const file = path.join(out, "pages", key);
+      fs.mkdirSync(path.dirname(file), { recursive: true });
+      fs.writeFileSync(file, candidate.pages[key]);
+    }
   }
   console.log(JSON.stringify(summary));
 }

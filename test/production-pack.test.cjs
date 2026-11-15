@@ -20,6 +20,7 @@ test("the morning snapshot matches the preserved production bytes", () => {
   assert.equal(first.idMax, 1321);
   assert.equal(first.idGaps, 0);
   assert.equal(first.staticFiles, 99);
+  assert.equal(first.staticAssets, 100);
   assert.equal(first.pages, 2745);
   assert.equal(first.contentSha256, second.contentSha256);
   assert.equal(first.contentSha256, contentDigest(loadSnapshot().pages));
@@ -48,9 +49,15 @@ test("PR4 candidate keeps the catalog and adds the rail on top of the snapshot",
   assert.ok(candidate.changed.includes("zh/index.html"));
   assert.equal(candidate.changed.includes("data/catalog.json"), false);
   assert.equal(candidate.changed.includes("llms.txt"), false);
-  assert.equal(candidate.changed.includes("en/games/browser-ai-games/index.html"), false);
+  assert.equal(candidate.changed.includes("en/games/browser-ai-games/index.html"), true);
+  assert.equal(candidate.changed.includes("en/games/fable-52-mid-november-2026/index.html"), false);
+  assert.equal(candidate.changed.includes("zh/games/browser-ai-games/index.html"), false);
+  assert.equal(candidate.pages["en/games/fable-52-mid-november-2026/index.html"], snapshot.pages["en/games/fable-52-mid-november-2026/index.html"]);
+  assert.equal(candidate.rules.cards, 6);
+  assert.equal(candidate.rules.playtestedAt, null);
   const again = buildCandidate(loadSnapshot());
   assert.equal(sha256(candidate.gzip), sha256(again.gzip));
+  assert.equal(candidate.pages["en/games/browser-ai-games/index.html"], again.pages["en/games/browser-ai-games/index.html"]);
   const catalog = JSON.parse(candidate.pages["data/catalog.json"]);
   const ids = new Set(catalog.games.map((game) => game.id));
   for (let id = 1; id <= 1321; id += 1) assert.equal(ids.has(id), true);

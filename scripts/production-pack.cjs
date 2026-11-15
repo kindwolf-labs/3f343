@@ -122,6 +122,8 @@ function verifySnapshot(loaded = loadSnapshot()) {
   if (pages["en/latest/index.html"]) {
     errors.push("en/latest unexpectedly inside the content pack");
   }
+  const staticReport = verifyStaticAssets(path.join(loaded.dir, "static"), manifest);
+  if (staticReport.errors.length) errors.push(...staticReport.errors);
   for (const [key, hash] of Object.entries(EXPECTED.live)) {
     if (!hash) continue;
     const body = pages[key];
@@ -142,7 +144,41 @@ function verifySnapshot(loaded = loadSnapshot()) {
     idMax: ids[ids.length - 1],
     idGaps: idGaps.length,
     contentSha256: contentDigest(pages),
+    staticAssets: staticReport.count,
   };
+}
+
+function listFiles(dir, base = dir, acc = []) {
+  if (!fs.existsSync(dir)) return acc;
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) listFiles(full, base, acc);
+    else acc.push(path.relative(base, full).split(path.sep).join("/"));
+  }
+  return acc;
+}
+
+function verifyStaticAssets(dir, manifest) {
+  const errors = [];
+  const files = manifest.files || {};
+  const imageKeys = Object.keys(files).filter(isImageKey).sort();
+  const onDisk = listFiles(dir).sort();
+  if (!fs.existsSync(dir)) errors.push("static directory missing: " + dir);
+  for (const key of imageKeys) {
+    const meta = files[key];
+    const file = path.join(dir, key);
+    if (!fs.existsSync(file)) {
+      errors.push("static file missing: " + key);
+      continue;
+    }
+    const body = fs.readFileSync(file);
+    if (body.length !== meta.size || sha256(body) !== meta.sha256) errors.push("static hash mismatch: " + key);
+  }
+  for (const key of onDisk) {
+    if (!imageKeys.includes(key)) errors.push("unexpected static file: " + key);
+  }
+  if (imageKeys.length !== 100) errors.push("manifest image count " + imageKeys.length);
+  return { count: imageKeys.length, onDisk: onDisk.length, errors };
 }
 
 function contentDigest(pages) {
@@ -172,4 +208,5 @@ module.exports = {
   repack,
   sha256,
   verifySnapshot,
+  verifyStaticAssets,
 };

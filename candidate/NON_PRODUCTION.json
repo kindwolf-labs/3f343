@@ -1,0 +1,7 @@
+{
+  "production": false,
+  "deploy": false,
+  "previewProxy": false,
+  "builtFrom": "snapshot/home-refresh-20261115",
+  "regenerate": "node scripts/pr4-candidate.cjs --out candidate"
+}

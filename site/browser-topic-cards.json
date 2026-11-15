@@ -1,0 +1,132 @@
+{
+  "page": "en/games/browser-ai-games/index.html",
+  "canonical": "https://3f343.com/en/games/browser-ai-games/",
+  "catalogUpdated": "2026-11-14",
+  "catalogCount": 1321,
+  "ranking": false,
+  "sourceCheckedAt": "2026-11-15T14:41:04Z",
+  "urlCheckedAt": "2026-11-15T15:49:33Z",
+  "playtestedAt": null,
+  "cards": [
+    {
+      "slug": "pulp-panic-1320",
+      "catalogId": 1320,
+      "addedOn": "2026-11-14",
+      "name": "Pulp Panic",
+      "image": "/media/pulp-panic.jpg",
+      "demoUrl": "https://pulp-panic.fly.dev/",
+      "gameplay": "Swipe to slice fruit, chain combos, dodge bombs, and smash the Grand Gourd. The catalog says the picture and the soundtrack are generated in code.",
+      "fit": "For a swipe-combo arcade, as that catalog sentence describes it.",
+      "notFit": "Swipe names a gesture in the catalog. This card does not add a device.",
+      "barrier": "The catalog description has no session length. Whether the demo matches the catalog's docs/screenshots/gameplay.jpg was not checked.",
+      "authorshipNote": "The catalog says the README credits Claude Code, and that the visuals and audio are generated in code. That is an authorship note, not a claim that a model runs during play.",
+      "urlCheck": {
+        "status": 200,
+        "finalUrl": "https://pulp-panic.fly.dev/",
+        "contentType": "text/html",
+        "checkedAt": "2026-11-15T15:49:33Z",
+        "meaning": "HTTP response is not a playtest"
+      }
+    },
+    {
+      "slug": "vaquitas-de-bloque-1321",
+      "catalogId": 1321,
+      "addedOn": "2026-11-14",
+      "name": "Vaquitas de Bloque",
+      "image": "/media/vaquitas-de-bloque.jpg",
+      "demoUrl": "https://vaquitas-de-bloque.vercel.app/",
+      "gameplay": "First-person game in a small block world: fill three holograms with the correct hide. The catalog names adventure mode, with rustlers at night, and a second mode.",
+      "fit": "For a first-person puzzle in a small block world, as the catalog describes it.",
+      "notFit": "The catalog does not name a keyboard, a mouse, a touch screen, or a gamepad. Which mode the demo opens in is unknown.",
+      "barrier": "Night rustlers are a catalog note about adventure mode, not a difficulty this page measured. What the second mode costs is not stated here.",
+      "authorshipNote": "The catalog credits the build to Claude Fable 5.2. That is a build credit, not a claim that a model runs during play.",
+      "urlCheck": {
+        "status": 200,
+        "finalUrl": "https://vaquitas-de-bloque.vercel.app/",
+        "contentType": "text/html; charset=utf-8",
+        "checkedAt": "2026-11-15T15:49:33Z",
+        "meaning": "HTTP response is not a playtest"
+      }
+    },
+    {
+      "slug": "balloon-stack-1311",
+      "catalogId": 1311,
+      "addedOn": "2026-11-07",
+      "name": "Balloon Stack",
+      "image": "/media/balloon-stack.jpg",
+      "demoUrl": "https://lewisca.github.io/Balloon-Stack/",
+      "gameplay": "Physics puzzle in the catalog's words: lift every balloon into the corner without letting one roll out. Solo, or versus an opponent the catalog calls AI, with an inspector.",
+      "fit": "For that solo or versus balloon puzzle.",
+      "notFit": "The catalog does not name an input device. This card does not say what the versus opponent or the inspector is.",
+      "barrier": "No session length is in the catalog description. The license line is catalog text; the license file was not opened for this card.",
+      "authorshipNote": "The catalog says commits are Co-Authored-By Claude Opus 5.5. Versus AI is the catalog's name for a mode, not an identification of the opponent.",
+      "urlCheck": {
+        "status": 200,
+        "finalUrl": "https://lewisca.github.io/Balloon-Stack/",
+        "contentType": "text/html; charset=utf-8",
+        "checkedAt": "2026-11-15T15:49:33Z",
+        "meaning": "HTTP response is not a playtest"
+      }
+    },
+    {
+      "slug": "dinopixel-1310",
+      "catalogId": 1310,
+      "addedOn": "2026-11-07",
+      "name": "DinoPixel",
+      "image": "/media/dinopixel.jpg",
+      "demoUrl": "https://dinopixel-game.vercel.app/",
+      "gameplay": "Color pixel endless runner, in the catalog's words, with unlockable animals, zones, and achievements. The catalog also says offline PWA.",
+      "fit": "For an endless runner, as the catalog describes it.",
+      "notFit": "A handheld was not tested. Offline was not tested. This card does not say a run continues without a network.",
+      "barrier": "No session length is in the catalog description. The catalog does not say whether offline means a cached page, a stored run, or both.",
+      "authorshipNote": "The catalog says many commits are Co-Authored-By Claude Opus or Sonnet. That is an authorship note, not a claim the runner calls a model while you play.",
+      "urlCheck": {
+        "status": 200,
+        "finalUrl": "https://dinopixel-game.vercel.app/",
+        "contentType": "text/html; charset=utf-8",
+        "checkedAt": "2026-11-15T15:49:33Z",
+        "meaning": "HTTP response is not a playtest"
+      }
+    },
+    {
+      "slug": "hoard-hopper-1309",
+      "catalogId": 1309,
+      "addedOn": "2026-11-07",
+      "name": "Hoard Hopper",
+      "image": "/media/hoard-hopper.jpg",
+      "demoUrl": "https://hoardhopper.synapticnoise.com",
+      "gameplay": "Browser platformer: a little red dragon gathers treasure through volcanic caves.",
+      "fit": "For a platformer about gathering treasure, as the catalog describes it.",
+      "notFit": "The catalog states no control and no device. This card does not say the dragon is a model.",
+      "barrier": "No session length is in the catalog description. The catalog's art-plugin sentence was not opened in the repository for this card.",
+      "authorshipNote": "The catalog splits the credit: Claude Code for the build, and Gemini or GPT image plugins for the art. The art sentence is not a claim about what happens during play.",
+      "urlCheck": {
+        "status": 200,
+        "finalUrl": "https://hoardhopper.synapticnoise.com",
+        "contentType": "text/html; charset=utf-8",
+        "checkedAt": "2026-11-15T15:49:33Z",
+        "meaning": "HTTP response is not a playtest"
+      }
+    },
+    {
+      "slug": "mirage-1301",
+      "catalogId": 1301,
+      "addedOn": "2026-11-06",
+      "name": "Mirage",
+      "image": "/media/mirage.jpg",
+      "demoUrl": "https://mirage.jaybulb.com",
+      "gameplay": "Small desert platformer, from Dry Creek to the Dust King. The catalog's own figure is about ten minutes.",
+      "fit": "For a desert platformer, using the catalog's about-ten-minutes figure rather than a time measured here.",
+      "notFit": "The catalog does not say whether that figure is one route, one life, or the author's estimate. It does not name a keyboard, a mouse, or another device.",
+      "barrier": "About ten minutes stays the catalog's figure. This page did not time a run.",
+      "authorshipNote": "The catalog attributes a commit to Claude Opus 5.5. It also names C and WASM as how the game runs. That is not a claim a model runs during play.",
+      "urlCheck": {
+        "status": 200,
+        "finalUrl": "https://mirage.jaybulb.com",
+        "contentType": "text/html",
+        "checkedAt": "2026-11-15T15:49:33Z",
+        "meaning": "HTTP response is not a playtest"
+      }
+    }
+  ]
+}
