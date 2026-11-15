@@ -1,0 +1,107 @@
+[
+  {
+    "path": "en/games/browser-ai-games/index.html",
+    "beforeBytes": 20635,
+    "afterBytes": 29091,
+    "beforeSha256": "3d5f7c36866c7b097451db78fd8306d4f1572a9721df928f656acf234e3b6d93",
+    "afterSha256": "1dcad69144c0fef29c37f3eca81ddda490cefce280c6ecc4bf71fdb0296079cb"
+  },
+  {
+    "path": "en/games/mirage-1301/index.html",
+    "beforeBytes": 4629,
+    "afterBytes": 5485,
+    "beforeSha256": "8df3632ca75d5725c563659f22ac61eb5118402e8b7342187ac9e9605429111d",
+    "afterSha256": "49087fec2c9955a5407dafd89a24aabf5bc585a35f33000210e626c892d3c794"
+  },
+  {
+    "path": "en/games/pulp-panic-1320/index.html",
+    "beforeBytes": 4904,
+    "afterBytes": 6205,
+    "beforeSha256": "23118291a915786dbfcd967f2e61609cb9f1b7037a3aebc0d4d43d41f2be16d5",
+    "afterSha256": "032b4d62e384eb338fbbb5a8997740d8f844a9a4890445cfe4952724e3d79108"
+  },
+  {
+    "path": "en/games/sightline-1317/index.html",
+    "beforeBytes": 4680,
+    "afterBytes": 6028,
+    "beforeSha256": "aa98cda7e822cd91da9d39e45693346a8ee6ff3659afc2feeaf3a68813b61553",
+    "afterSha256": "f2e5354f8bee48e12d4abd0e763cc7d6b3821a871c407a2029286962e1791b93"
+  },
+  {
+    "path": "en/games/the-last-rune-1308/index.html",
+    "beforeBytes": 4847,
+    "afterBytes": 5696,
+    "beforeSha256": "c40b8aaebbdd5aa6d748fdcedc16a5030c5ab14b190859e32aa50627621014ad",
+    "afterSha256": "47f5025a3d22fb4c19dcfb1a0932b19dff8191afc8a49bc5d0acc0c0d1d3660d"
+  },
+  {
+    "path": "en/games/topkapi-gecesi-1252/index.html",
+    "beforeBytes": 4489,
+    "afterBytes": 5309,
+    "beforeSha256": "89631f9c33fab422b6011055785e7782a812e2e65bf6a99be38cddf52af12bf9",
+    "afterSha256": "11bd7e792f44715153cb682392aa3100dd4977ea74a3d07891eaf45278dfbd41"
+  },
+  {
+    "path": "en/games/vaquitas-de-bloque-1321/index.html",
+    "beforeBytes": 5260,
+    "afterBytes": 6587,
+    "beforeSha256": "39fc70f983a970f1e9248c0e95a7ab7ef6f225e1cb22e03fd55563536eb5571d",
+    "afterSha256": "70ac4fe3371b6890638b17558f14ec079c2146f532b189edc289d63f72fd9e0d"
+  },
+  {
+    "path": "en/index.html",
+    "beforeBytes": 32915,
+    "afterBytes": 41572,
+    "beforeSha256": "db34304fddc5006668160a2aec52b472177f3529e60384247c531e8b9f009e01",
+    "afterSha256": "51aa2e7edf819579009fc04cc6da0e24e10316e98bb3f89333300e66ade332b2"
+  },
+  {
+    "path": "zh/games/mirage-1301/index.html",
+    "beforeBytes": 4631,
+    "afterBytes": 5492,
+    "beforeSha256": "edada2d080099c24758bbd08538cf05f4ba5af812bc2203f891561b3561eb5d9",
+    "afterSha256": "12e95a4eabc3b9c2096dc0c51da7c65856c208d1b1eaf4bae654243bfe4578fa"
+  },
+  {
+    "path": "zh/games/pulp-panic-1320/index.html",
+    "beforeBytes": 4587,
+    "afterBytes": 5882,
+    "beforeSha256": "b0b2648e6378072c2d2dc2134d636ed5e43dc913e32c492d6733a32dbf030289",
+    "afterSha256": "d57f91d5335aa89f645d24a1b53042eb223cce45ba0b5e400b09f780bac8a9cb"
+  },
+  {
+    "path": "zh/games/sightline-1317/index.html",
+    "beforeBytes": 4515,
+    "afterBytes": 5874,
+    "beforeSha256": "3d6a7ad15d87d1143733f9e31da22ec093a6dca2c2fc7b74377a482d7691e4ad",
+    "afterSha256": "8acbb191b2432fc4449f1e3bbdca4e7a7136826803fd2ad9249b8c68b623e7ea"
+  },
+  {
+    "path": "zh/games/the-last-rune-1308/index.html",
+    "beforeBytes": 4865,
+    "afterBytes": 5736,
+    "beforeSha256": "2aaaccf51497621de0b37c5730d5ada16c1e4000de4a43f1f55cedbfeba1cd02",
+    "afterSha256": "2d15b425663ee3191eee1c0bf2bdfdae30ecd1da8fbcfa66757e20885a9b9aa1"
+  },
+  {
+    "path": "zh/games/topkapi-gecesi-1252/index.html",
+    "beforeBytes": 4430,
+    "afterBytes": 5247,
+    "beforeSha256": "f5fdb37e527b743d92ea13b655d27ef7b4034c5f954dda84a2e11dad8daf93e4",
+    "afterSha256": "95f731e62fdb2b84c80dfc3450bb79c249b44542cc939aed6190bda49d7f497b"
+  },
+  {
+    "path": "zh/games/vaquitas-de-bloque-1321/index.html",
+    "beforeBytes": 5235,
+    "afterBytes": 6544,
+    "beforeSha256": "cfbeceefa6bfd73e7564bf895918e6583e79f3890bb4be35405347159600c473",
+    "afterSha256": "4aebc6e31174c1f6a63925c7b65cb4560352c27a194fa7eb06dcea51a6f42f23"
+  },
+  {
+    "path": "zh/index.html",
+    "beforeBytes": 33161,
+    "afterBytes": 41800,
+    "beforeSha256": "6d6c863f61a60300821208eef0a8d6ddec66add974da8f212da0dbcd8e88e3ca",
+    "afterSha256": "d986da485f6a44bbf0525a550c79c36cc3542c3815c5eab658bb4453228e4ed0"
+  }
+]

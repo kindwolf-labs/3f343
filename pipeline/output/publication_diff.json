@@ -1,0 +1,11 @@
+{
+  "approved": false,
+  "blocked": "approval_required",
+  "catalogHold": {
+    "count": 1321,
+    "missing": [],
+    "ok": true,
+    "updatedOn": "2026-11-14"
+  },
+  "entries": []
+}

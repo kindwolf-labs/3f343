@@ -1,0 +1,11 @@
+{
+  "buildCommand": "node build.cjs",
+  "installCommand": "echo No dependencies",
+  "outputDirectory": "out",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "https://3f343-home-refresh-nadxh13ef-cn1000y-3055.vercel.app/$1"
+    }
+  ]
+}

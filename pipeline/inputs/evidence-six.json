@@ -1,0 +1,113 @@
+{
+  "source": "Catalog text read 2026-11-15T14:41:04Z plus the URL check recorded 2026-11-15T15:49:33Z. These six are the only evidence records. They are not a review of the whole catalog.",
+  "records": [
+    {
+      "catalogId": 1320,
+      "slug": "pulp-panic-1320",
+      "name": "Pulp Panic",
+      "demoUrl": "https://pulp-panic.fly.dev/",
+      "sourceUrl": "https://github.com/buildatscale-tv/pulp-panic",
+      "sourceCheckedAt": "2026-11-15T14:41:04Z",
+      "urlCheck": {
+        "status": 200,
+        "finalUrl": "https://pulp-panic.fly.dev/",
+        "contentType": "text/html",
+        "checkedAt": "2026-11-15T15:49:33Z"
+      },
+      "playtestedAt": null,
+      "aiRole": "authoring_credit",
+      "aiRoleEvidence": "Catalog says the README credits Claude Code and that the picture and soundtrack are generated in code. That is not a claim a model runs during play.",
+      "openQuestions": ["Whether the demo matches docs/screenshots/gameplay.jpg."]
+    },
+    {
+      "catalogId": 1321,
+      "slug": "vaquitas-de-bloque-1321",
+      "name": "Vaquitas de Bloque",
+      "demoUrl": "https://vaquitas-de-bloque.vercel.app/",
+      "sourceUrl": "https://github.com/ivolivares/vaquitas-de-bloque",
+      "sourceCheckedAt": "2026-11-15T14:41:04Z",
+      "urlCheck": {
+        "status": 200,
+        "finalUrl": "https://vaquitas-de-bloque.vercel.app/",
+        "contentType": "text/html; charset=utf-8",
+        "checkedAt": "2026-11-15T15:49:33Z"
+      },
+      "playtestedAt": null,
+      "aiRole": "authoring_credit",
+      "aiRoleEvidence": "Catalog credits the build to Claude Fable 5.2. That is a build credit, not a claim a model runs during play.",
+      "openQuestions": ["Which mode the demo opens in."]
+    },
+    {
+      "catalogId": 1311,
+      "slug": "balloon-stack-1311",
+      "name": "Balloon Stack",
+      "demoUrl": "https://lewisca.github.io/Balloon-Stack/",
+      "sourceUrl": "https://github.com/lewisca/Balloon-Stack",
+      "sourceCheckedAt": "2026-11-15T14:41:04Z",
+      "urlCheck": {
+        "status": 200,
+        "finalUrl": "https://lewisca.github.io/Balloon-Stack/",
+        "contentType": "text/html; charset=utf-8",
+        "checkedAt": "2026-11-15T15:49:33Z"
+      },
+      "playtestedAt": null,
+      "aiRole": "authoring_credit",
+      "aiRoleEvidence": "Catalog says commits are Co-Authored-By Claude Opus 5.5. It calls the opponent AI. What that opponent is stays unknown. This is not an LLM classification.",
+      "openQuestions": ["What the versus opponent is."]
+    },
+    {
+      "catalogId": 1310,
+      "slug": "dinopixel-1310",
+      "name": "DinoPixel",
+      "demoUrl": "https://dinopixel-game.vercel.app/",
+      "sourceUrl": "https://github.com/rzazo24/dinopixel-game",
+      "sourceCheckedAt": "2026-11-15T14:41:04Z",
+      "urlCheck": {
+        "status": 200,
+        "finalUrl": "https://dinopixel-game.vercel.app/",
+        "contentType": "text/html; charset=utf-8",
+        "checkedAt": "2026-11-15T15:49:33Z"
+      },
+      "playtestedAt": null,
+      "aiRole": "authoring_credit",
+      "aiRoleEvidence": "Catalog says many commits are Co-Authored-By Claude Opus or Sonnet. That is not a claim the runner calls a model while you play.",
+      "openQuestions": ["What the catalog phrase offline PWA means."]
+    },
+    {
+      "catalogId": 1309,
+      "slug": "hoard-hopper-1309",
+      "name": "Hoard Hopper",
+      "demoUrl": "https://hoardhopper.synapticnoise.com",
+      "sourceUrl": "https://github.com/zeveck/hoardhopper",
+      "sourceCheckedAt": "2026-11-15T14:41:04Z",
+      "urlCheck": {
+        "status": 200,
+        "finalUrl": "https://hoardhopper.synapticnoise.com",
+        "contentType": "text/html; charset=utf-8",
+        "checkedAt": "2026-11-15T15:49:33Z"
+      },
+      "playtestedAt": null,
+      "aiRole": "authoring_credit",
+      "aiRoleEvidence": "Catalog splits the credit: Claude Code for the build, and Gemini or GPT image plugins for the art. The art sentence is not a claim about play.",
+      "openQuestions": ["Whether the art plugins were opened in the repository."]
+    },
+    {
+      "catalogId": 1301,
+      "slug": "mirage-1301",
+      "name": "Mirage",
+      "demoUrl": "https://mirage.jaybulb.com",
+      "sourceUrl": "https://github.com/nulljosh/mirage",
+      "sourceCheckedAt": "2026-11-15T14:41:04Z",
+      "urlCheck": {
+        "status": 200,
+        "finalUrl": "https://mirage.jaybulb.com",
+        "contentType": "text/html",
+        "checkedAt": "2026-11-15T15:49:33Z"
+      },
+      "playtestedAt": null,
+      "aiRole": "authoring_credit",
+      "aiRoleEvidence": "Catalog attributes a commit to Claude Opus 5.5 and names C and WASM as how the game runs. That is not a claim a model runs during play.",
+      "openQuestions": ["What the catalog's ten-minute figure counts."]
+    }
+  ]
+}

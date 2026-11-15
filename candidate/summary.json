@@ -1,0 +1,45 @@
+{
+  "production": false,
+  "picks": [
+    "arcade:pulp-panic-1320",
+    "short:mirage-1301",
+    "phone:topkapi-gecesi-1252",
+    "explore:vaquitas-de-bloque-1321",
+    "runtime:the-last-rune-1308",
+    "caveat:sightline-1317"
+  ],
+  "changed": [
+    "en/games/browser-ai-games/index.html",
+    "en/games/mirage-1301/index.html",
+    "en/games/pulp-panic-1320/index.html",
+    "en/games/sightline-1317/index.html",
+    "en/games/the-last-rune-1308/index.html",
+    "en/games/topkapi-gecesi-1252/index.html",
+    "en/games/vaquitas-de-bloque-1321/index.html",
+    "en/index.html",
+    "zh/games/mirage-1301/index.html",
+    "zh/games/pulp-panic-1320/index.html",
+    "zh/games/sightline-1317/index.html",
+    "zh/games/the-last-rune-1308/index.html",
+    "zh/games/topkapi-gecesi-1252/index.html",
+    "zh/games/vaquitas-de-bloque-1321/index.html",
+    "zh/index.html"
+  ],
+  "rules": {
+    "ok": true,
+    "cards": 6,
+    "slugs": [
+      "pulp-panic-1320",
+      "vaquitas-de-bloque-1321",
+      "balloon-stack-1311",
+      "dinopixel-1310",
+      "hoard-hopper-1309",
+      "mirage-1301"
+    ],
+    "sourceCheckedAt": "2026-11-15T14:41:04Z",
+    "urlCheckedAt": "2026-11-15T15:49:33Z",
+    "playtestedAt": null
+  },
+  "gzipBytes": 1097013,
+  "gzipSha256": "fb2fe843dff2d709a38946c5c8b895344251d8a873905721f30453e930308d0a"
+}

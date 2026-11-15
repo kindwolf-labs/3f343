@@ -1,0 +1,34 @@
+{
+  "executed": false,
+  "script": {
+    "path": "/workspace/candidate path from release-catalog-1321-20261114/build_candidate.py",
+    "sha256": "9a094dd97ceaca46baeb39e21bf239301dcbd36a0b6ab3f7058a0691d7b55bc2",
+    "size": 27744
+  },
+  "review": "The script writes only local files. Its output directory is hardcoded to /workspace/candidate-morning-20261114. It also writes deployment JSON whose target field is production, and it does not call a network deploy API. It stamps datetime.now(), so a rerun is not byte-stable. It builds a 1319-to-1321 pack and does not contain the current Fable page, so its output is not the current home-refresh snapshot. It was not executed.",
+  "missing": [
+    "/workspace/3f343-seo-backfill/site/detail-page.cjs"
+  ],
+  "missingReason": "The collected render-game-detail.cjs requires ../site/detail-page.cjs. That sibling was not in the collected package. The repo copy of scripts/render-game-detail.cjs matches the collected script byte for byte (e8b7bb41e0ba817b3d07154cfc0d298d46ba78cba8b946c47e9d3df36548f3e4). site/detail-page.cjs in this repo was not in the package and was not used as a substitute.",
+  "omittedFromGit": {
+    "path": "release-catalog-1319-20261113/mcp-create-deployment-args.sha-only.json",
+    "sha256": "2ed991f8c5847ac754975dc36f9d96848d8b1cdffa9cad5532701dd28a81b4fe",
+    "size": 11715,
+    "reason": "Local production-target deployment argument file. The hash is recorded. The bytes are not republished in this public repository."
+  },
+  "collected": {
+    "release-catalog-1319-20261113/pages.json.gz": "1af7ad9cbdda64a11e1c701d73da5814cca4229ea7d8397491f23a59f911c6bd",
+    "release-catalog-1319-20261113/release-manifest.json": "87a5bd1f02c8059198caac58bb47582659dd6c2c23010f761ef7f86abcf48cd5",
+    "3f343-seo-backfill/scripts/render-game-detail.cjs": "e8b7bb41e0ba817b3d07154cfc0d298d46ba78cba8b946c47e9d3df36548f3e4",
+    "candidate-morning-20261114/evidence/pulp-panic-LICENSE": "2a3d2ce8a17e552135aa2c3e4797733cb8008f8d026c273e4f09c6f6ab6c4d1e",
+    "candidate-morning-20261114/evidence/pulp-panic-README.md": "1eb0b5cca0732a8f8b9447c6980424fcf18d6eaf9566194236dbce594d1085f0",
+    "candidate-morning-20261114/evidence/pulp-panic-repo.json": "d2236df8ebdbf0f04c09046be0a687a096f5f75abeee410f983985e3f761c29a",
+    "candidate-morning-20261114/evidence/pulp-panic-demo.html": "5504d95d3262fdaa89a1744d3a24e1a293eeef0873f43cd5e70885a78a13e696",
+    "candidate-morning-20261114/evidence/vaquitas-de-bloque-LICENSE": "32a50c8e66a7fa0aac2d4308304845d85b8f51817234ec2f890f86081a7b2a3f",
+    "candidate-morning-20261114/evidence/vaquitas-de-bloque-README.md": "2e1bc93a82bc3ce83702ee63a9522702deb53781989de9b52a60962ebfdf41bb",
+    "candidate-morning-20261114/evidence/vaquitas-de-bloque-repo.json": "54165db2bfa2177151d8ce29b98ccc08a5f3e2c4434c680939ad6aacabd60539",
+    "candidate-morning-20261114/evidence/vaquitas-de-bloque-demo.html": "a187047acb8f4bd03c0bc8fd145e5930e9a7169f516fcbf6ff29387884aa46a6",
+    "candidate-morning-20261114/static/media/pulp-panic.jpg": "5b5efcf19d1d1867e7ce3fbcd3db2031e120bb9c8eb8a6754e9b53aa99dd8418",
+    "candidate-morning-20261114/static/media/vaquitas-de-bloque.jpg": "41b50772b8d9a27cb13d78c5dd9d95d900a7b5029ee4dcc7f99c0b63f608f42b"
+  }
+}

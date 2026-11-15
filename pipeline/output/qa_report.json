@@ -1,0 +1,15 @@
+{
+  "catalogHold": {
+    "count": 1321,
+    "missing": [],
+    "ok": true,
+    "updatedOn": "2026-11-14"
+  },
+  "conflicts": 0,
+  "duplicates": 0,
+  "evidenceRecords": 6,
+  "normalized": 6,
+  "ok": true,
+  "publishable": 6,
+  "rejected": 0
+}
