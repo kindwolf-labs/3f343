@@ -26,31 +26,40 @@ test("topic rules stay inside the catalog and keep the three checks apart", () =
   ]);
 });
 
-test("the existing topic URL is replaced in place and renders the same HTML twice", () => {
+test("the existing topic keeps its list and folds checks under the six picks", () => {
   const snapshot = loadSnapshot();
   const before = snapshot.pages["en/games/browser-ai-games/index.html"];
   const after = patchTopic(before, CARDS);
   assert.equal(patchTopic(after, CARDS), after);
-  assert.equal(renderTopic(CARDS, { insights: true }), after);
   assert.equal(after.includes("/_vercel/insights/script.js"), true);
   assert.equal(after.includes('href="https://3f343.com/en/games/browser-ai-games/"'), true);
   assert.equal(after.includes("/en/games/fable-52-mid-november-2026/"), true);
-  assert.equal(after.includes('id="topic-cards"'), true);
+  assert.equal(after.indexOf('id="topic-cards"') < after.indexOf('id="more-browser-games"'), true);
   assert.equal((after.match(/class="topic-card"/g) || []).length, 6);
+  assert.equal((after.match(/<details class="sources">/g) || []).length, 6);
+  assert.equal(after.includes("<details class=\"sources\" open"), false);
   assert.equal((after.match(/data-source-checked=/g) || []).length, 6);
   assert.equal((after.match(/data-url-checked=/g) || []).length, 6);
   assert.equal((after.match(/data-playtested=""/g) || []).length, 6);
   assert.equal(after.includes("A response is not a playtest."), true);
-  assert.equal(after.includes("Not done."), true);
-  assert.equal(/\bfree\b|免费|\bLLM\b|手机|\bphones?\b|\bmobile\b|可玩|\bplayable\b/i.test(after), false);
+  assert.equal(after.includes("Playtest: Not done."), true);
+  assert.equal(after.includes("as the catalog describes"), false);
+  assert.equal(after.includes("not tested"), false);
+  const ids = [...before.matchAll(/<article class="card" id="([^"]+)"/g)].map((match) => match[1]);
+  assert.equal(ids.length, 25);
+  for (const id of ids) assert.equal(after.includes(`id="${id}"`), true, id);
+  const picks = after.slice(after.indexOf('id="topic-cards"'), after.indexOf('id="more-browser-games"'));
+  assert.equal(/\bfree\b|免费|\bLLM\b|手机|\bphones?\b|\bmobile\b|可玩|\bplayable\b/i.test(picks), false);
   assert.equal(after.includes("zh/games/browser-ai-games"), false);
   const record = JSON.parse(after.match(/<script type="application\/json" id="topic-rule-record">([\s\S]*?)<\/script>/)[1]);
   assert.equal(record.playtestedAt, null);
   assert.equal(record.catalogCount, 1321);
   assert.equal(record.ranking, false);
-  const mirage = after.slice(after.indexOf('id="mirage-1301"'), after.indexOf('id="mirage-1301"') + 2500);
+  const mirage = after.slice(after.indexOf('id="pick-mirage-1301"'), after.indexOf("</article>", after.indexOf('id="pick-mirage-1301"')));
+  const face = mirage.slice(0, mirage.indexOf("<details"));
   assert.match(mirage, /catalog/i);
-  assert.match(mirage, /ten minutes/i);
+  assert.match(face, /ten minutes/i);
+  assert.equal(/2026-11-15T/.test(face), false);
 });
 
 test("candidate keeps every catalog id and leaves fable, sitemap, and latest untouched", () => {

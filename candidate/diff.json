@@ -2,9 +2,9 @@
   {
     "path": "en/games/browser-ai-games/index.html",
     "beforeBytes": 20635,
-    "afterBytes": 14490,
+    "afterBytes": 29091,
     "beforeSha256": "3d5f7c36866c7b097451db78fd8306d4f1572a9721df928f656acf234e3b6d93",
-    "afterSha256": "6047bb9502876407ffdb845ebbb933566eaed72ad8ae7f315e8ec923d07beee1"
+    "afterSha256": "6058d9542029974415c9a5e53e43397781ac62844949615b4aefc0670080da99"
   },
   {
     "path": "en/games/mirage-1301/index.html",
@@ -51,9 +51,9 @@
   {
     "path": "en/index.html",
     "beforeBytes": 32915,
-    "afterBytes": 41473,
+    "afterBytes": 41572,
     "beforeSha256": "db34304fddc5006668160a2aec52b472177f3529e60384247c531e8b9f009e01",
-    "afterSha256": "540f33ad72aef135f56f900ae55a40e4cb15ed110f8dec8b0fb027eba75182fb"
+    "afterSha256": "51aa2e7edf819579009fc04cc6da0e24e10316e98bb3f89333300e66ade332b2"
   },
   {
     "path": "zh/games/mirage-1301/index.html",
@@ -100,8 +100,8 @@
   {
     "path": "zh/index.html",
     "beforeBytes": 33161,
-    "afterBytes": 41697,
+    "afterBytes": 41800,
     "beforeSha256": "6d6c863f61a60300821208eef0a8d6ddec66add974da8f212da0dbcd8e88e3ca",
-    "afterSha256": "8ee94990927d3d548999c0b8d853b697fde1cc82ee1de7e6db7295fbb556099d"
+    "afterSha256": "d986da485f6a44bbf0525a550c79c36cc3542c3815c5eab658bb4453228e4ed0"
   }
 ]

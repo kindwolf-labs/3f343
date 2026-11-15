@@ -57,7 +57,7 @@ const COPY = {
     fitTitle: "Is this for you?",
     back: "Back to Start here",
     topic: "Browser AI games",
-    topicNote: "keeps the source check, the URL check, and the playtest apart.",
+    topicNote: "Six browser games to try first. The longer list stays on that page.",
     relatedTitle: "Other catalog entries",
     relatedNote: "Neighboring catalog ids. This list is not a recommendation.",
     chips: [
@@ -91,7 +91,7 @@ const COPY = {
     fitTitle: "这款适合谁",
     back: "返回先体验",
     topic: "浏览器 AI 游戏（英文）",
-    topicNote: "把资料核对、链接核对和试玩记录分开写。",
+    topicNote: "先看六款浏览器游戏，原来的长列表还在这一页。",
     relatedTitle: "其他目录条目",
     relatedNote: "相邻的目录编号，不是推荐。",
     chips: [
@@ -381,7 +381,7 @@ function intentMatch(g,mode){const t=catalogBlob(g);if(mode==="all")return true;
 function emptyCatalogMessage(){if(mode==="short"||mode==="phone"||mode==="runtime"||mode==="browser"||mode==="still"||mode==="sourced")return ${JSON.stringify(copy.emptyIntent)};return ${JSON.stringify(copy.emptySearch)};}`;
 }
 
-const START_CSS = `<style id="start-here">#start{margin:8px 0 0;padding:0}#start h2{margin:0 0 4px;font-size:clamp(26px,4vw,34px);letter-spacing:-.04em}#start .start-lead{margin:0 0 6px;color:#efb767;font-size:13px}#start .start-topic{margin:0 0 10px;font-size:15px}#start .start-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}#start .start-card{display:grid;grid-template-columns:minmax(0,1fr) 92px;gap:10px;align-items:start;min-width:0;background:#141923;border:1px solid #293340;border-radius:12px;padding:10px 12px}#start .start-thumb img{width:92px;height:68px;object-fit:cover;border-radius:8px;background:#263348;display:block}#start .start-slot{margin:0;color:#efb767;font-size:11px;font-weight:700}#start h3{margin:1px 0 4px;font-size:18px;line-height:1.15}#start .start-hook{margin:0 0 4px;font-size:14px;line-height:1.35}#start .start-fit{margin:0 0 4px;font-size:14px;font-weight:700;line-height:1.35}#start .start-gate{margin:0 0 6px;color:#d7c49a;font-size:12px;line-height:1.35}#start .start-actions{display:flex;flex-wrap:wrap;gap:8px 10px;margin:6px 0 0;align-items:center}#start .start-actions a{font-size:13px}#start .start-demo{background:#fff;color:#111;border-radius:8px;padding:6px 10px;font-weight:700}#start .start-source{color:#9aa8b7;font-size:12px}#intent{margin:0 0 10px}#intent .caption{margin:0 0 8px}#intent .filters{margin-bottom:0}@media(max-width:800px){#start .start-grid{grid-template-columns:1fr}}@media(max-width:720px){header{height:auto;align-items:flex-start;flex-wrap:wrap;padding:8px 0}header nav{display:flex;flex-wrap:wrap;gap:8px 12px;width:100%}#start .start-card{grid-template-columns:minmax(0,1fr) 76px;padding:8px 10px}#start .start-thumb img{width:76px;height:56px}}</style>`;
+const START_CSS = `<style id="start-here">#start{margin:8px 0 0;padding:0}#start h2{margin:0 0 4px;font-size:clamp(26px,4vw,34px);letter-spacing:-.04em}#start .start-lead{margin:0 0 6px;color:#efb767;font-size:13px}#start .start-topic{margin:0 0 10px;font-size:15px}#start .start-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}#start .start-card{display:grid;grid-template-columns:minmax(0,1fr) 92px;gap:10px;align-items:start;min-width:0;background:#141923;border:1px solid #293340;border-radius:12px;padding:10px 12px}#start .start-thumb img{width:92px;height:68px;object-fit:cover;border-radius:8px;background:#263348;display:block}#start .start-slot{margin:0;color:#efb767;font-size:11px;font-weight:700}#start h3{margin:1px 0 4px;font-size:18px;line-height:1.15}#start .start-hook{margin:0 0 4px;font-size:14px;line-height:1.35}#start .start-fit{margin:0 0 4px;font-size:14px;font-weight:700;line-height:1.35}#start .start-gate{margin:0 0 6px;color:#d7c49a;font-size:12px;line-height:1.35}#start .start-actions{display:flex;flex-wrap:wrap;gap:8px 10px;margin:6px 0 0;align-items:center}#start .start-actions a{font-size:13px}#start .start-demo{background:#fff;color:#111;border-radius:8px;padding:6px 10px;font-weight:700}#start .start-source{color:#9aa8b7;font-size:12px}#intent{margin:0 0 10px}#intent .caption{margin:0 0 8px}#intent .filters{margin-bottom:0}@media(max-width:800px){#start .start-grid{grid-template-columns:1fr}}@media(max-width:720px){header{height:auto;align-items:flex-start;flex-wrap:wrap;padding:8px 0}header nav{display:flex;flex-wrap:wrap;gap:8px 12px;width:100%}#start .start-card{grid-template-columns:minmax(0,1fr) 76px;padding:8px 10px}#start .start-thumb img{width:76px;height:56px}.consent{position:static;z-index:auto;left:auto;bottom:auto;max-width:none;margin:16px 0 28px}}</style>`;
 
 function patchHomepage(html, picks, locale) {
   if (!COPY[locale]) throw new Error("Unknown locale " + locale);
