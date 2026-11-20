@@ -83,9 +83,30 @@ function htmlLang(locale) {
   return locale === "zh" ? "zh-CN" : "en";
 }
 
-function boilerplate(name, locale) {
-  if (locale === "zh") return `查看 ${name} 的实机图、试玩和源码。`;
-  return `Screenshots, playable demo and source of ${name}.`;
+function boilerplate(name, locale, game = {}) {
+  const links = [];
+  if (absoluteUrl(game.demo)) links.push(locale === "zh" ? "所列试玩链接" : "a listed demo link");
+  if (absoluteUrl(game.github) || absoluteUrl(game.sourceUrl)) {
+    links.push(locale === "zh" ? "来源链接" : "a source link");
+  }
+  if (locale === "zh") return `${name} 的 3F343 游戏目录条目${links.length ? "，附" + links.join("和") : ""}。`;
+  return `${name} in the 3F343 game catalog${links.length ? ", with " + links.join(" and ") : ""}.`;
+}
+
+function isOldBoilerplate(value) {
+  return /^Screenshots, playable demo and source of .+\.$/i.test(value) ||
+    /^查看 .+ 的实机图、试玩和源码。$/.test(value);
+}
+
+function shortenDescription(value, locale) {
+  const max = locale === "zh" ? 96 : 165;
+  const plain = String(value).split(/\s*(?:MIT (?:LICENSE|License|license) verified|(?:Repository|Listed demo|Official still):|已核验 MIT|目录中的试玩地址)[：:\s]*/)[0].trim();
+  if ([...plain].length <= max) return plain;
+  const prefix = [...plain].slice(0, max - 1).join("");
+  const stop = [...prefix.matchAll(locale === "zh" ? /[。！？]/gu : /[.!?](?=\s+[A-Z“"])/g)].at(-1);
+  if (stop && stop.index >= max * 0.43) return prefix.slice(0, stop.index + 1);
+  const clipped = locale === "zh" ? prefix : prefix.replace(/\s+\S*$/, "");
+  return (clipped || prefix).replace(/[,:;，、；：\s]+$/u, "") + "…";
 }
 
 function cjkCount(value) {
@@ -105,7 +126,7 @@ function isCutOff(short, long) {
 
 function isUsableDescription(value, locale) {
   const text = String(value || "").replace(/\s+/g, " ").trim();
-  if (!text || PLACEHOLDERS.has(text) || isFeatureTag(text)) return false;
+  if (!text || PLACEHOLDERS.has(text) || isFeatureTag(text) || isOldBoilerplate(text)) return false;
   if ([...text].length < 24) return false;
   const ratio = cjkCount(text) / text.length;
   if (locale === "zh") return ratio >= 0.15 || cjkCount(text) >= 4;
@@ -127,7 +148,7 @@ function existingMetaDescription(html) {
   return content ? stripTags(content[1]) : "";
 }
 
-function chooseDescription(game, locale, html) {
+function chooseDescription(game, locale, html, { concise = true } = {}) {
   const name = (game && game.name) || nameFromHtml(html) || "Game";
   const catalogText =
     locale === "zh"
@@ -147,9 +168,10 @@ function chooseDescription(game, locale, html) {
   }
   const kept = unique.filter((item) => !unique.some((other) => isCutOff(item, other)));
   if (kept.length) {
-    return kept.sort((a, b) => b.length - a.length)[0];
+    const preferred = kept.sort((a, b) => b.length - a.length)[0];
+    return concise ? shortenDescription(preferred, locale) || boilerplate(name, locale, game) : preferred;
   }
-  return boilerplate(name, locale);
+  return boilerplate(name, locale, game);
 }
 
 function firstImage(html) {
@@ -201,18 +223,6 @@ function sameAsLinks(game) {
   return links;
 }
 
-function stylesFromHtml(html) {
-  const head = String(html || "").split(/<\/head>/i)[0] || "";
-  const styles = head.match(/<style\b[\s\S]*?<\/style>/gi);
-  return styles && styles.length ? styles.join("") : DEFAULT_STYLE;
-}
-
-function robotsFromHtml(html) {
-  const head = String(html || "").split(/<\/head>/i)[0] || "";
-  const match = head.match(/<meta\b[^>]*name=["']robots["'][^>]*>/i);
-  return match ? match[0] : "";
-}
-
 function jsonLd(game, locale, description, image, url) {
   const data = {
     "@context": "https://schema.org",
@@ -220,6 +230,7 @@ function jsonLd(game, locale, description, image, url) {
     name: game.name,
     description,
     url,
+    inLanguage: htmlLang(locale),
   };
   if (image) data.image = image;
   const sameAs = sameAsLinks(game);
@@ -277,30 +288,92 @@ function gameFromHtml(html, locale, partial) {
 }
 
 function upgradeDetailHtml(html, game, locale) {
-  const loc = locale === "zh" ? "zh" : "en";
+  if (locale !== "en" && locale !== "zh") throw new Error("Invalid locale");
+  const loc = locale;
   const resolved = gameFromHtml(html, loc, game);
-  if (!resolved.slug || !resolved.name) {
-    throw new Error("Detail page is missing a slug or name");
+  if (!/^[a-z0-9][a-z0-9-]*$/i.test(resolved.slug || "") || !resolved.name) {
+    throw new Error("Detail page is missing a valid slug or name");
   }
+  const headMatch = String(html).match(/<head\b[^>]*>[\s\S]*?<\/head>/i);
+  const bodyMatch = String(html).match(/<body\b[\s\S]*$/i);
+  if (!headMatch || !bodyMatch) throw new Error("Missing head or body");
   const description = chooseDescription(resolved, loc, html);
   const image = chooseImage(resolved, html);
-  const head = renderHead({
-    game: resolved,
-    locale: loc,
-    description,
-    image,
-    style: stylesFromHtml(html),
-    robots: robotsFromHtml(html),
-  });
-  const bodyMatch = String(html).match(/<body\b[\s\S]*$/i);
-  const body = withConsent(bodyMatch ? bodyMatch[0] : "<body></body></html>", loc);
-  return `<!doctype html><html lang="${htmlLang(loc)}">${head}${body}`;
+  const expected = pageUrl(loc, resolved.slug);
+  const attribute = (tag, key) =>
+    tag.match(new RegExp(`(?:^|\\s)${key}\\s*=\\s*(["'])(.*?)\\1`, "i"))?.[2];
+  let head = headMatch[0];
+  const elements = (start) => head.match(new RegExp(`<${start}\\b[^>]*>`, "gi")) || [];
+  const add = (value) => { head = head.replace(/<\/head>/i, () => value + "</head>"); };
+  const links = () => elements("link");
+  const metas = () => elements("meta");
+  const findMeta = (key,value) => metas().filter(tag => attribute(tag,key)?.toLowerCase() === value);
+  const putMeta = (key, value, content) => {
+    const tags = findMeta(key,value);
+    const replacement = `<meta ${key}="${value}" content="${escAttr(content)}">`;
+    if (tags.length > 1) throw new Error("Multiple " + value + " tags");
+    if (!tags.length) add(replacement);
+    else head = head.replace(tags[0], () => replacement);
+  };
+  const canonical = links().filter(tag => attribute(tag,"rel")?.toLowerCase() === "canonical");
+  if (canonical.length > 1 || (canonical.length && attribute(canonical[0],"href") !== expected)) {
+    throw new Error("Existing canonical differs from the expected detail URL");
+  }
+  if (!canonical.length) add(`<link rel="canonical" href="${expected}">`);
+  const alternate = (localeCode, href) => {
+    const current = links().filter(tag => attribute(tag,"rel") === "alternate" &&
+      attribute(tag,"hreflang")?.toLowerCase() === localeCode.toLowerCase());
+    if (current.length > 1 || (current.length && attribute(current[0],"href") !== href)) {
+      throw new Error("Existing hreflang differs for " + localeCode);
+    }
+    if (!current.length) add(`<link rel="alternate" hreflang="${localeCode}" href="${href}">`);
+  };
+  alternate("en",pageUrl("en",resolved.slug));
+  alternate("zh-CN",pageUrl("zh",resolved.slug));
+  // An explicit x-default on a legacy detail is left in place. Additional
+  // locales and arbitrary head metadata also remain unchanged.
+  if (!links().some(tag=>attribute(tag,"hreflang")?.toLowerCase() === "x-default")) {
+    alternate("x-default",pageUrl("en",resolved.slug));
+  }
+  const title = `${resolved.name} | ${SITE_NAME}`;
+  if (/<title>[\s\S]*?<\/title>/i.test(head)) {
+    head = head.replace(/<title>[\s\S]*?<\/title>/i, () => `<title>${escText(title)}</title>`);
+  } else add(`<title>${escText(title)}</title>`);
+  putMeta("name","description",description);
+  putMeta("property","og:title",title);
+  putMeta("property","og:description",description);
+  putMeta("property","og:url",expected);
+  if (image) putMeta("property","og:image",image);
+  else head=absolutizeOgImages(head);
+  let foundGameSchema = 0;
+  const desired = jsonLd(resolved, loc, description, image, expected);
+  const desiredData = JSON.parse(desired.replace(/^<script[^>]*>|<\/script>$/g, ""));
+  head = head.replace(/(<script\b[^>]*type=["']application\/ld\+json["'][^>]*>)([\s\S]*?)(<\/script>)/gi,
+    (raw,a,b,c) => {
+      let data;
+      try { data=JSON.parse(b); } catch { return raw; }
+      if (data["@type"]!=="VideoGame") return raw;
+      if (data.url && data.url !== expected) throw Error("Existing VideoGame schema differs from canonical");
+      foundGameSchema++;
+      const merged = {...data,...desiredData};
+      return a+JSON.stringify(merged).replace(/</g,"\\u003c")+c;
+    });
+  if (foundGameSchema>1) throw Error("Multiple VideoGame schemas");
+  if (!foundGameSchema && /"@type"\s*:\s*"(?:CreativeWork|CollectionPage|Article)"/i.test(head)) {
+    throw Error("Detail is not a standalone VideoGame schema");
+  }
+  if (!foundGameSchema) add(desired);
+  // Existing analytics/consent, icons and feeds are not replaced. The legacy
+  // thin template lacked this same-origin script, so add only when absent.
+  if (!/\/_vercel\/insights\/script\.js/i.test(head)) add('<script defer src="/_vercel/insights/script.js"></script>');
+  return String(html).replace(headMatch[0], () => head);
 }
 
 function renderDetailPage(game, locale) {
   if (!game || !game.slug || !game.name) throw new Error("Game slug and name are required");
   const loc = locale === "zh" ? "zh" : "en";
   const description = chooseDescription(game, loc, "");
+  const fullDescription = chooseDescription(game, loc, "", { concise: false });
   const image = chooseImage(game, "");
   const head = renderHead({
     game,
@@ -314,20 +387,19 @@ function renderDetailPage(game, locale) {
   const other = loc === "zh" ? pageUrl("en", game.slug).replace(ORIGIN, "") : pageUrl("zh", game.slug).replace(ORIGIN, "");
   const otherLabel = loc === "zh" ? "English" : "中文";
   const catalogLabel = loc === "zh" ? "收录日期" : "Cataloged";
-  const sourceLabel = loc === "zh" ? "开发者源码" : "Developer source";
-  const playLabel = loc === "zh" ? "试玩" : "Play demo";
+  const sourceLabel = loc === "zh" ? "条目来源" : "Source link";
+  const playLabel = loc === "zh" ? "打开所列试玩" : "Open listed demo";
   const licenseLabel = loc === "zh" ? "截图许可与署名" : "Screenshot license and attribution";
-  const disclaimer =
-    loc === "zh"
-      ? "试玩核验范围见条目证据记录，并非完整通关。"
-      : "Demo verification scope is recorded in the entry evidence; it is not a full playthrough.";
+  const disclaimer = loc === "zh"
+    ? "所列地址不代表本站已完成试玩。"
+    : "A listed demo link does not mean 3F343 completed a playtest.";
   const when = game.addedOn || game.verifiedOn || "";
   const models = Array.isArray(game.models) ? game.models.filter(Boolean).join(" · ") : "";
   const tech = Array.isArray(game.tech) ? game.tech.filter(Boolean).join(" · ") : "";
   const parts = [
     `<a href="${home}">3F343</a> · <a href="${escAttr(other)}">${otherLabel}</a>`,
     `<h1>${escText(game.name)}</h1>`,
-    `<p>${escText(description)}</p>`,
+    `<p>${escText(fullDescription)}</p>`,
   ];
   if (when || models) {
     parts.push(`<p>${escText(catalogLabel)}: ${escText([when, models].filter(Boolean).join(" · "))}</p>`);
@@ -335,21 +407,20 @@ function renderDetailPage(game, locale) {
   if (tech) parts.push(`<p>${escText(tech)}</p>`);
   if (image) {
     parts.push(`<img src="${escAttr(image)}" alt="${escAttr(game.name)}">`);
-    const media = image.match(/\/media\/([^/]+)$/);
-    if (media) {
-      const file = media[1].replace(/\.[^.]+$/, "");
-      parts.push(`<p><a href="/media/${escAttr(file)}-LICENSE.txt">${licenseLabel}</a></p>`);
-    }
+    const mediaLicense = absoluteUrl(game.imageLicenseUrl || game.rights?.screenshotLicenseUrl);
+    if (mediaLicense) parts.push(`<p><a href="${escAttr(mediaLicense)}">${licenseLabel}</a></p>`);
   }
   const links = [];
-  if (absoluteUrl(game.github)) {
-    links.push(`<a href="${escAttr(absoluteUrl(game.github))}">${sourceLabel}</a>`);
+  const repository = absoluteUrl(game.github);
+  const source = repository || absoluteUrl(game.sourceUrl);
+  if (source) {
+    links.push(`<a href="${escAttr(source)}">${sourceLabel}</a>`);
   }
   if (absoluteUrl(game.demo)) {
     links.push(`<a href="${escAttr(absoluteUrl(game.demo))}">${playLabel}</a>`);
   }
   if (links.length) parts.push(`<p>${links.join(" · ")}</p>`);
-  parts.push(`<small>${disclaimer}</small>`);
+  if (absoluteUrl(game.demo)) parts.push(`<small>${disclaimer}</small>`);
   const body = withConsent(`<body><main>${parts.join("")}</main></body></html>`, loc);
   return `<!doctype html><html lang="${htmlLang(loc)}">${head}${body}`;
 }
@@ -385,7 +456,6 @@ function missingRichTags(html) {
   }
   const image = head.match(/property=["']og:image["'][^>]*content=["']([^"']+)["']/i);
   if (image && !/^https?:\/\//i.test(image[1])) missing.push("og:image-absolute");
-  if (/twitter:card/i.test(head)) missing.push("unexpected-twitter");
   return missing;
 }
 

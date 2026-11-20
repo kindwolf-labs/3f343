@@ -110,7 +110,7 @@ test("rich pages keep external absolute images and gain og:description", () => {
   const html = upgradeDetailHtml(rich, outpace, "en");
   assert.deepEqual(missingRichTags(html), []);
   assert.match(html, /og:image" content="https:\/\/raw\.githubusercontent\.com\/ethanplusai\/outpace\//);
-  assert.match(html, /og:description" content="Screenshots, playable demo and source of Outpace\."/);
+  assert.match(html, /og:description" content="Outpace in the 3F343 game catalog, with a listed demo link and a source link\."/);
   assert.match(html, /Gameplay: typing controls/);
   assert.doesNotMatch(html, /打字控制/);
   assert.match(html, /<style>body\{color:#fff\}<\/style>/);
@@ -127,7 +127,7 @@ test("placeholder and feature-tag copy do not become the meta description", () =
     },
     "en"
   );
-  assert.match(html, /content="Screenshots, playable demo and source of Endless Dash\."/);
+  assert.match(html, /content="Endless Dash in the 3F343 game catalog\."/);
   assert.match(html, /<p>No description in the original catalog\.<\/p>/);
   assert.match(html, /og:image" content="https:\/\/3f343\.com\/media\/endless-dash-81\.jpg"/);
   const fromCatalog = upgradeDetailHtml(
@@ -190,7 +190,7 @@ test("patch-root updates detail pages and the homepage without touching robots o
   fs.writeFileSync(catalog, JSON.stringify({ games: [bloom] }));
   const result = spawnSync(
     process.execPath,
-    [path.join(__dirname, "../scripts/render-game-detail.cjs"), "--catalog", catalog, "--patch-root", root],
+    [path.join(__dirname, "../scripts/render-game-detail.cjs"), "--catalog", catalog, "--patch-root", root, "--all"],
     { encoding: "utf8" }
   );
   assert.equal(result.status, 0, result.stderr);
@@ -204,4 +204,84 @@ test("patch-root updates detail pages and the homepage without touching robots o
     "User-agent: *\nAllow: /\nSitemap: https://3f343.com/sitemap.xml\n"
   );
   assert.equal(fs.readFileSync(path.join(root, "sitemap.xml"), "utf8"), "<urlset></urlset>");
+});
+
+test("fallback never invents a demo, screenshot, or code for a source-only entry", () => {
+  const game = {slug:"cyber-sunday-5",name:"CYBER SUNDAY",sourceUrl:"https://example.org/game"};
+  for (const locale of ["en","zh"]) {
+    const html = renderDetailPage(game, locale);
+    const meta = html.match(/<meta name="description" content="([^"]+)/)[1];
+    assert.doesNotMatch(meta, /screenshot|listed demo|试玩|实机图|源码/iu);
+    assert.match(meta, /source link|来源链接/u);
+    assert.match(html, /href="https:\/\/example\.org\/game"/);
+    assert.doesNotMatch(html, /og:image|Open listed demo|打开所列试玩/);
+    const ld = JSON.parse(html.match(/<script type="application\/ld\+json">(.*?)<\/script>/)[1]);
+    assert.equal(ld.inLanguage, locale === "zh" ? "zh-CN" : "en");
+    assert.equal(ld.description, meta);
+  }
+});
+
+test("short meta descriptions preserve long, source-backed visible body", () => {
+  const html = renderDetailPage(gitche, "en");
+  const meta = html.match(/<meta name="description" content="([^"]+)/)[1];
+  assert.ok([...meta].length <= 165);
+  assert.doesNotMatch(meta, /LICENSE verified|westfield\.dev/i);
+  assert.match(html.split("</head>")[1], /MIT LICENSE verified/);
+});
+
+test("backfill leaves multilingual hubs and unrelated head/robots content untouched", (t) => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "f343-hubs-"));
+  t.after(() => fs.rmSync(root, {recursive:true,force:true}));
+  const catalog = path.join(root,"catalog.json");
+  const hub = path.join(root,"en","games","browser-ai-games","index.html");
+  const game = path.join(root,"en","games",bloom.slug,"index.html");
+  const hubHtml = '<html><head><title>Guide</title><link rel="alternate" hreflang="ja" href="/ja/games/browser-ai-games/"></head></html>';
+  const original = thinPage(bloom.slug, bloom.name, bloom.description);
+  for (const [file,content] of [[catalog,JSON.stringify({games:[bloom]})],[hub,hubHtml],[game,original]]) {
+    fs.mkdirSync(path.dirname(file),{recursive:true});
+    fs.writeFileSync(file,content);
+  }
+  const cli = (args) => spawnSync(process.execPath,[path.join(__dirname,"../scripts/render-game-detail.cjs"),"--patch-root",root,...args],{encoding:"utf8"});
+  const dry = cli(["--catalog",catalog,"--all","--dry-run"]);
+  assert.equal(dry.status,0,dry.stderr);
+  assert.deepEqual(JSON.parse(dry.stdout),{dryRun:true,updated:0,wouldUpdate:1,skipped:[path.relative(root,hub)]});
+  assert.equal(fs.readFileSync(game,"utf8"),original);
+  const invalid = cli(["--catalog",catalog,"--only-slugs","browser-ai-games"]);
+  assert.notEqual(invalid.status,0);
+  assert.equal(fs.readFileSync(game,"utf8"),original);
+  const empty = cli(["--catalog",catalog]);
+  assert.notEqual(empty.status,0);
+  const missingLocale = cli(["--catalog",catalog,"--only-slugs="+bloom.slug]);
+  assert.notEqual(missingLocale.status,0);
+  assert.equal(fs.readFileSync(game,"utf8"),original);
+  const result = cli(["--catalog",catalog,"--all"]);
+  assert.equal(result.status,0,result.stderr);
+  assert.equal(fs.readFileSync(hub,"utf8"),hubHtml);
+  assert.notEqual(fs.readFileSync(game,"utf8"),original);
+  const repeat = cli(["--catalog",catalog,"--all"]);
+  assert.equal(JSON.parse(repeat.stdout).updated,0);
+});
+
+test("backfill preserves third-language markup, consent, body and unrelated head tags", () => {
+  const input=thinPage(bloom.slug,bloom.name,bloom.description)
+    .replace("</head>", '<link rel="alternate" hreflang="ja" href="https://3f343.com/ja/games/bloom-hop-1282/"><link rel="stylesheet" href="/theme.css"><meta name="robots" content="max-image-preview:large"><meta name="twitter:card" content="summary"><script>window.before=true</script></head>');
+  const body=s=>s.split("</head>")[1];
+  const out=upgradeDetailHtml(input,bloom,"en");
+  assert.equal(body(out),body(input));
+  assert.match(out,/hreflang="ja"/);
+  assert.match(out,/name="robots" content="max-image-preview:large"/);
+  assert.match(out,/name="twitter:card"/);
+  assert.match(out,/href="\/theme\.css"/);
+  assert.match(out,/window.before=true/);
+  assert.throws(()=>upgradeDetailHtml(input.replace('/en/games/bloom-hop-1282/','/en/games/wrong/'),bloom,"en"),/canonical/);
+  assert.equal(upgradeDetailHtml(out,bloom,"en"),out);
+});
+
+test("new renders don't invent a license companion file or claim source code", () => {
+  const game={slug:"paper",name:"Paper",github:"https://social.example/project",image:"https://shots.example/media/paper.png"};
+  const out=renderDetailPage(game,"en");
+  assert.match(out,/Source link/);
+  assert.doesNotMatch(out,/Developer source|LICENSE\.txt/);
+  const withLicense=renderDetailPage({...game,imageLicenseUrl:"https://shots.example/rights"},"en");
+  assert.match(withLicense, /href="https:\/\/shots\.example\/rights">Screenshot license/);
 });
