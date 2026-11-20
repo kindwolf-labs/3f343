@@ -186,6 +186,9 @@ test("patch-root updates detail pages and the homepage without touching robots o
     path.join(root, "en", "games", "bloom-hop-1282", "index.html"),
     thinPage("bloom-hop-1282", "Bloom Hop", bloom.description)
   );
+  fs.mkdirSync(path.join(root,"zh","games",bloom.slug),{recursive:true});
+  fs.writeFileSync(path.join(root,"zh","games",bloom.slug,"index.html"),
+    thinPage(bloom.slug,bloom.name,bloom.descriptionZh).replace("/en/games/","/zh/games/").replace('lang="en"','lang="zh-CN"'));
   const catalog = path.join(root, "catalog.json");
   fs.writeFileSync(catalog, JSON.stringify({ games: [bloom] }));
   const result = spawnSync(
@@ -216,7 +219,7 @@ test("fallback never invents a demo, screenshot, or code for a source-only entry
     assert.match(html, /href="https:\/\/example\.org\/game"/);
     assert.doesNotMatch(html, /og:image|Open listed demo|打开所列试玩/);
     const ld = JSON.parse(html.match(/<script type="application\/ld\+json">(.*?)<\/script>/)[1]);
-    assert.equal(ld.inLanguage, locale === "zh" ? "zh-CN" : "en");
+    assert.equal(ld.inLanguage, undefined, "the page language is not the game UI language");
     assert.equal(ld.description, meta);
   }
 });
@@ -242,18 +245,28 @@ test("backfill leaves multilingual hubs and unrelated head/robots content untouc
     fs.writeFileSync(file,content);
   }
   const cli = (args) => spawnSync(process.execPath,[path.join(__dirname,"../scripts/render-game-detail.cjs"),"--patch-root",root,...args],{encoding:"utf8"});
+  const onlyEnglish = cli(["--catalog",catalog,"--all","--dry-run"]);
+  assert.notEqual(onlyEnglish.status,0);
+  assert.match(onlyEnglish.stderr,/Expected both EN and ZH/);
+  assert.equal(fs.readFileSync(game,"utf8"),original);
+  const pair = path.join(root,"zh","games",bloom.slug,"index.html");
+  fs.mkdirSync(path.dirname(pair),{recursive:true});
+  const localZh=original.replace('/en/games/','/zh/games/').replace('lang="en"','lang="zh-CN"');
+  fs.writeFileSync(pair,localZh);
   const dry = cli(["--catalog",catalog,"--all","--dry-run"]);
   assert.equal(dry.status,0,dry.stderr);
-  assert.deepEqual(JSON.parse(dry.stdout),{dryRun:true,updated:0,wouldUpdate:1,skipped:[path.relative(root,hub)]});
+  assert.deepEqual(JSON.parse(dry.stdout),{dryRun:true,updated:0,wouldUpdate:2,skipped:[path.relative(root,hub)]});
   assert.equal(fs.readFileSync(game,"utf8"),original);
   const invalid = cli(["--catalog",catalog,"--only-slugs","browser-ai-games"]);
   assert.notEqual(invalid.status,0);
   assert.equal(fs.readFileSync(game,"utf8"),original);
   const empty = cli(["--catalog",catalog]);
   assert.notEqual(empty.status,0);
+  fs.unlinkSync(pair);
   const missingLocale = cli(["--catalog",catalog,"--only-slugs="+bloom.slug]);
   assert.notEqual(missingLocale.status,0);
   assert.equal(fs.readFileSync(game,"utf8"),original);
+  fs.writeFileSync(pair,localZh);
   const result = cli(["--catalog",catalog,"--all"]);
   assert.equal(result.status,0,result.stderr);
   assert.equal(fs.readFileSync(hub,"utf8"),hubHtml);

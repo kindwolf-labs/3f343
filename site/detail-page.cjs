@@ -230,7 +230,6 @@ function jsonLd(game, locale, description, image, url) {
     name: game.name,
     description,
     url,
-    inLanguage: htmlLang(locale),
   };
   if (image) data.image = image;
   const sameAs = sameAsLinks(game);

@@ -17,7 +17,7 @@ Public catalog of AI-built and vibe-coded games. Source, screenshot and browser 
 ## Detail pages
 New listings should be rendered with `renderDetailPage()` in `site/detail-page.cjs` (en and zh). That head matches the rich pattern already live on pages such as `/en/games/outpace-346/`: meta description, hreflang, absolute Open Graph URL and image, VideoGame JSON-LD, and Vercel Web Analytics. Copy comes from the catalog description or the sentence already on the page. Feature-tag lines (`玩法：` / `技术：`) and “no description” placeholders stay out of the meta description.
 
-Preview a **scoped** backfill on a copy of the current production build. This does not edit hubs, feeds, `robots.txt` or `sitemap.xml`. Scope is mandatory. `--only-slugs` requires both language files; `--all` operates on all catalog details and normalizes homepage image URLs. Existing alternate languages, custom head tags, analytics and body copy are preserved; conflicting canonical or hreflang tags abort the backfill.
+Preview a **scoped** backfill on a copy of the current production build. This does not edit hubs, feeds, `robots.txt` or `sitemap.xml`. Scope and both language files are mandatory. `--only-slugs` checks the listed slug pairs; `--all` checks every catalog slug pair and normalizes homepage image URLs. Existing alternate languages, custom head tags, analytics and body copy are preserved; conflicting canonical or hreflang tags abort the backfill.
 
 ```bash
 node --test

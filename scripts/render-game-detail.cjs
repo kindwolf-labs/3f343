@@ -61,7 +61,7 @@ function patchRoot(root, games, selected, dryRun = false) {
   }
   const planned = [];
   const skipped = [];
-  const matched = new Map([...selected].map(slug=>[slug,0]));
+  const matched = new Map([...(selected.size ? selected : games.keys())].map(slug=>[slug,0]));
   const queue = (file, before, after) => {
     if (before !== after) planned.push({ file, after });
   };
@@ -83,7 +83,7 @@ function patchRoot(root, games, selected, dryRun = false) {
         skipped.push(path.relative(root, file));
         continue;
       }
-      if (selected.has(slug)) matched.set(slug,matched.get(slug)+1);
+      if (matched.has(slug)) matched.set(slug,matched.get(slug)+1);
       const before = fs.readFileSync(file, "utf8");
       const after = upgradeDetailHtml(before, game, locale);
       const missing = missingRichTags(after);
